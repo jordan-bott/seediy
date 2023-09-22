@@ -1,3 +1,4 @@
+seediy
 webfonts
 caprover
 uvicorn
