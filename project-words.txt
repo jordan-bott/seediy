@@ -1,0 +1,12 @@
+webfonts
+caprover
+uvicorn
+fastapi
+TTFB
+youtubes
+Caprover
+pycache
+pytest
+excalidraw
+wireframe
+wireframes

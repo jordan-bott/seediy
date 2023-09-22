@@ -1,0 +1,27 @@
+dictionaryDefinitions:
+  - name: project-words
+    path: "./project-words.txt"
+    addWords: true
+dictionaries:
+  - project-words
+ignorePaths:
+  - Dockerfile.*
+  - .gitignore
+  - migrations
+  - project.*.mjs
+  - project-words.txt
+  - pyproject.toml
+  - webpack.config.js
+  - "*.conf"
+  - "*.css"
+  - "*.csv"
+  - "*.config"
+  - "*.env"
+  - "*.excalidraw"
+  - "*.flake8"
+  - "*.json"
+  - "*.min.js"
+  - "*.sh"
+  - "*.svg"
+  - "*.yaml"
+  - "*.yml"
