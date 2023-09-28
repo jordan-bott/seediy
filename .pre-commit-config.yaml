@@ -10,6 +10,7 @@ repos:
     rev: 22.10.0
     hooks:
       - id: black
+        exclude: migrations
   - repo: https://github.com/PyCQA/flake8
     rev: 6.0.0
     hooks:
@@ -19,6 +20,7 @@ repos:
     rev: v2.0.0
     hooks:
       - id: prettier
+        exclude: migrations
   - repo: https://github.com/streetsidesoftware/cspell-cli
     rev: v6.31.0
     hooks:
