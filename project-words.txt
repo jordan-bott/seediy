@@ -12,3 +12,5 @@ excalidraw
 wireframe
 wireframes
 mooli
+psycopg
+dockerfiles
