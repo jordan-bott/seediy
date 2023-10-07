@@ -1,8 +1,9 @@
-# volumes:
+volumes:
+  seediy-data:
+    external: true
+
 services:
   fastapi:
-    environment:
-      CORS_HOST: http://localhost:3000
     build:
       context: api
       dockerfile: Dockerfile.dev
@@ -10,6 +11,10 @@ services:
       - 8000:8000
     volumes:
       - ./api:/app
+    environment:
+      SIGNING_KEY: ${SIGNING_KEY}
+      DATABASE_URL: postgresql://plant:password@postgres/plant
+      WAIT_HOSTS: postgres:5432
 
   ghi:
     image: node:lts-bullseye
@@ -24,4 +29,17 @@ services:
       NODE_ENV: development
       HOST: "0.0.0.0"
       PUBLIC_URL: http://localhost:3000
-      REACT_APP_API_HOST: ${REACT_APP_API_HOST}
+      REACT_APP_SAMPLE_SERVICE_API_HOST: http://localhost:8000
+      WATCHPACK_POLLING: true
+
+  postgres:
+    build:
+      context: ./relational-data
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - seediy-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_MULTIPLE_DATABASES=plant
+      - POSTGRES_PASSWORD=test-databases
+    ports:
+      - 15432:5432
