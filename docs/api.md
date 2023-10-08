@@ -215,6 +215,96 @@
 
 </details>
 
+<details><summary>Update Account Password</summary>
+
+```
+- Endpoint path: /api/users/{id}/password
+- Endpoint method: PUT
+
+- Headers:
+
+  - Authorization: Bearer token
+
+- Request shape (JSON):
+
+  """
+  	{
+        "password": string,
+        "password_confirmation": string
+  	}
+  	"""
+
+- Response: Updated Account
+- Response shape (JSON):
+  """
+  	{
+		"id": int,
+        "type": string,
+		"username": string,
+        "password_hash": string,
+        "email": string,
+        "zip_code": string,
+        "posts": int,
+        "sprouts": int,
+        "date_created": date,
+        "units": string,
+        "lon": string,
+        "lat": string,
+        "zone": string,
+        "first_frost": date,
+        "last_frost": date,
+        "high_temp": string,
+        "low_temp": string
+  	}
+	"""
+```
+
+</details>
+
+<details><summary>Update Account to Admin</summary>
+
+```
+- Endpoint path: /api/users/{id}/admin
+- Endpoint method: PUT
+
+- Headers:
+
+  - Authorization: Bearer token
+
+- Request shape (JSON):
+
+  """
+  	{
+        "type": string
+  	}
+  	"""
+
+- Response: Updated Account
+- Response shape (JSON):
+  """
+  	{
+		"id": int,
+        "type": string,
+		"username": string,
+        "email": string,
+        "zip_code": string,
+        "posts": int,
+        "sprouts": int,
+        "date_created": date,
+        "units": string,
+        "lon": string,
+        "lat": string,
+        "zone": string,
+        "first_frost": date,
+        "last_frost": date,
+        "high_temp": string,
+        "low_temp": string
+  	}
+	"""
+```
+
+</details>
+
 <details><summary>Delete A User</summary>
 
 ```
@@ -230,6 +320,73 @@
 * Response shape (bool):
     """
 	bool
+    """
+```
+
+</details>
+
+<details><summary>Get List of Users</summary>
+
+```
+* Endpoint path: /api/users
+* Endpoint method: GET
+
+
+* Headers:
+  * Authorization: Bearer token
+
+* Response: View Users
+* Response shape (JSON):
+    """
+		[
+			{
+			"id": int,
+            "type": string,
+            "username": string,
+            "email": string,
+            "zip_code": string,
+            "posts": int,
+            "sprouts": int,
+            "date_created": date
+			}
+		]
+    	"""
+```
+
+</details>
+
+<details><summary>Get one User</summary>
+
+```
+* Endpoint path: /api/users/{user_id}
+* Endpoint method: GET
+* Query parameters:
+  * user_id: user_id
+
+* Headers:
+  * Authorization: Bearer token
+
+* Response: View User
+* Response shape (JSON):
+    """
+		{
+		"id": int,
+        "type": string,
+		"username": string,
+        "email": string,
+        "zip_code": string,
+        "posts": int,
+        "sprouts": int,
+        "date_created": date,
+        "units": string,
+        "lon": string,
+        "lat": string,
+        "zone": string,
+        "first_frost": date,
+        "last_frost": date,
+        "high_temp": string,
+        "low_temp": string
+		}
     """
 ```
 
@@ -254,6 +411,7 @@
         "user_id": int,
         "name" string,
         "nickname": string,
+        "quantity": int,
         "days_to_harvest": int,
         "frost_hardy": string,
         "season": string,
@@ -276,6 +434,7 @@
         "user_id": int,
         "name" string,
         "nickname": string,
+        "quantity": int,
         "days_to_harvest": int,
         "frost_hardy": string,
         "planted": string,
@@ -312,6 +471,7 @@
         "user_id": int,
         "name" string,
         "nickname": string,
+        "quantity": int,
         "days_to_harvest": int,
         "frost_hardy": string,
         "season": string,
@@ -334,6 +494,7 @@
         "user_id": int,
         "name" string,
         "nickname": string,
+        "quantity": int,
         "days_to_harvest": int,
         "frost_hardy": string,
         "planted": string,
@@ -379,6 +540,7 @@
         "user_id": int,
         "name" string,
         "nickname": string,
+        "quantity": int,
         "days_to_harvest": int,
         "frost_hardy": string,
         "planted": string,
@@ -424,6 +586,7 @@
         "user_id": int,
         "name" string,
         "nickname": string,
+        "quantity": int,
         "days_to_harvest": int,
         "frost_hardy": string,
         "planted": string,
@@ -482,6 +645,7 @@
                 "user_id": int,
                 "name" string,
                 "nickname": string,
+                "quantity": int,
                 "days_to_harvest": int,
                 "frost_hardy": string,
                 "planted": string,
