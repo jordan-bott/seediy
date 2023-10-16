@@ -12,3 +12,7 @@ excalidraw
 wireframe
 wireframes
 psycopg
+pydantic
+passlib
+rapidapi
+conninfo

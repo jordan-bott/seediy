@@ -10,16 +10,16 @@ steps = [
             posts INTEGER NOT NULL DEFAULT 0,
             sprouts INTEGER NOT NULL DEFAULT 0,
             date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            hashed_password VARCHAR(2000) NOT NULL,
-            units VARCHAR(100) NOT NULL,
+            password_hash VARCHAR(2000) NOT NULL,
+            units VARCHAR(100) NOT NULL DEFAULT 'english',
             zipcode VARCHAR(100) NOT NULL,
             lon VARCHAR(100) NOT NULL,
             lat VARCHAR(100) NOT NULL,
             zone VARCHAR(100) NOT NULL,
             first_frost TIMESTAMP NOT NULL,
             last_frost TIMESTAMP NOT NULL,
-            high_temp VARCHAR(100) NOT NULL,
-            low_temp VARCHAR(100) NOT NULL
+            high_temp INT NOT NULL DEFAULT 95,
+            low_temp INT NOT NULL DEFAULT 38
         );
         """,
         """
@@ -59,6 +59,7 @@ steps = [
             user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
             name VARCHAR(1000) NOT NULL,
             nickname VARCHAR(100) NOT NULL,
+            quantity INTEGER NOT NULL,
             days_to_harvest INTEGER NOT NULL,
             frost_hardy BOOLEAN NOT NULL,
             planted BOOLEAN DEFAULT FALSE,
@@ -84,7 +85,6 @@ steps = [
             id SERIAL PRIMARY KEY NOT NULL,
             user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
             seed_id INTEGER REFERENCES seeds(id) ON DELETE CASCADE,
-            name VARCHAR(1000) NOT NULL,
             date_planted TIMESTAMP NOT NULL,
             location VARCHAR(1000) NOT NULL,
             currently_planted BOOLEAN DEFAULT TRUE,
