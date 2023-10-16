@@ -16,3 +16,4 @@ pydantic
 passlib
 rapidapi
 conninfo
+pyjwt

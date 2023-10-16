@@ -24,20 +24,25 @@ class UserOut(BaseModel):
     verified: bool
     posts: int
     sprouts: int
-    date_created: date
+    date_created: str
     units: str
     zipcode: str
     lon: str
     lat: str
     zone: str
-    first_frost: date
-    last_frost: date
+    first_frost: str
+    last_frost: str
     high_temp: str
     low_temp: str
 
 
+class LoginOut(BaseModel):
+    username: str
+    password_hash: str
+
+
 class UserOutPass(UserOut):
-    hashed_pass: str
+    password_hash: str
 
 
 class UserQueries:
@@ -50,15 +55,15 @@ class UserQueries:
             verified=user[4],
             posts=user[5],
             sprouts=user[6],
-            date_created=user[7],
-            hashed_pass=user[8],
+            date_created=str(user[7]),
+            password_hash=user[8],
             units=user[9],
             zipcode=user[10],
             lon=user[11],
             lat=user[12],
             zone=user[13],
-            first_frost=user[14],
-            last_frost=user[15],
+            first_frost=str(user[14]),
+            last_frost=str(user[15]),
             high_temp=user[16],
             low_temp=user[17],
         )
@@ -105,7 +110,7 @@ class UserQueries:
         #     print(e)
         #     return {"error": "could not create that user"}
 
-    def get(self, user_id: int) -> UserOutPass:
+    def get(self, username: str) -> UserOutPass:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -113,9 +118,9 @@ class UserQueries:
                         """
                         SELECT *
                         FROM users
-                        WHERE id = %s
+                        WHERE username = %s
                         """,
-                        [user_id],
+                        [username],
                     )
                     user = result.fetchone()
                     return self.user_pass_out(user)

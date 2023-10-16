@@ -5,3 +5,4 @@ pytest
 python-multipart==0.0.6
 requests==2.31.0
 passlib==1.7.4
+pyjwt==2.8.0

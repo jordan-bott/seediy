@@ -9,9 +9,11 @@ from fastapi import (
 
 from pydantic import BaseModel
 from datetime import date
-from queries.auth import UserIn, UserOutPass, UserQueries
+from queries.auth import UserIn, UserOut, UserOutPass, UserQueries
 from passlib.hash import bcrypt
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
+import jwt
 import requests
 import json
 import os
@@ -29,7 +31,26 @@ class UserEntry(BaseModel):
     last_frost: date
 
 
+oauth2scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+JWT_KEY = os.environ["JWT_KEY"]
+
 router = APIRouter()
+
+
+@router.post("/token")
+async def generate_token(
+    form_data: OAuth2PasswordRequestForm = Depends(),
+    users: UserQueries = Depends(),
+):
+    user = users.get(form_data.username)
+    if bcrypt.verify(form_data.password, user.password_hash):
+        user_dict = user.dict()
+        del user_dict["password_hash"]
+        token = jwt.encode(user_dict, JWT_KEY)
+        return {"access_token": token, "token_type": "Bearer"}
+    else:
+        return {"error": "token not created"}
 
 
 @router.post("/api/users", response_model=UserOutPass)
@@ -84,7 +105,8 @@ async def create_user(
     return user
 
 
-@router.get("/api/users", response_model=UserOutPass)
-def get_user(user_id: int, users: UserQueries = Depends()) -> UserOutPass:
-    user = users.get(user_id)
-    return user
+@router.get("/api/users", response_model=UserOut)
+def get_user(
+    token: str = Depends(oauth2scheme), users: UserQueries = Depends()
+) -> UserOut:
+    return jwt.decode(token, JWT_KEY, algorithms=["HS256"])
