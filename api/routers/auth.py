@@ -13,6 +13,7 @@ from queries.auth import UserIn, UserOut, UserOutPass, UserQueries
 from passlib.hash import bcrypt
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
+
 import jwt
 import requests
 import json
@@ -40,6 +41,7 @@ router = APIRouter()
 
 @router.post("/token")
 async def generate_token(
+    response: Response,
     form_data: OAuth2PasswordRequestForm = Depends(),
     users: UserQueries = Depends(),
 ):
@@ -48,9 +50,16 @@ async def generate_token(
         user_dict = user.dict()
         del user_dict["password_hash"]
         token = jwt.encode(user_dict, JWT_KEY)
-        return {"access_token": token, "token_type": "Bearer"}
+        response.set_cookie(key="fastapi_token", value=token)
+        return {"access_token": token, "token_type": "bearer"}
     else:
         return {"error": "token not created"}
+
+
+@router.delete("/token")
+def logout(response: Response):
+    response.delete_cookie(key="fastapi_token")
+    return True
 
 
 @router.post("/api/users", response_model=UserOutPass)
@@ -105,8 +114,12 @@ async def create_user(
     return user
 
 
-@router.get("/api/users", response_model=UserOut)
+@router.get("/api/users", response_model=UserOut | dict)
 def get_user(
-    token: str = Depends(oauth2scheme), users: UserQueries = Depends()
-) -> UserOut:
-    return jwt.decode(token, JWT_KEY, algorithms=["HS256"])
+    request: Request,
+):
+    try:
+        token = request.cookies["fastapi_token"]
+        return jwt.decode(token, JWT_KEY, algorithms=["HS256"])
+    except Exception:
+        return {"error": "no token found"}
