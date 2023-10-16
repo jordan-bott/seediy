@@ -118,6 +118,11 @@ async def create_user(
 def get_user(
     request: Request,
 ):
+    # token: str = Depends(oauth2_scheme)
+    # ^ this will protect the endpoint, but it doesn't read the cookie in the
+    #  browser
+    # the way I get the token below does read the token from the browser,
+    # but it feels wrong
     try:
         token = request.cookies["fastapi_token"]
         return jwt.decode(token, JWT_KEY, algorithms=["HS256"])
