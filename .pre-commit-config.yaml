@@ -19,7 +19,7 @@ repos:
     rev: v2.0.0
     hooks:
       - id: prettier
-        exclude: migrations
+        exclude: migrations, docs, journals, relational-data, api
   - repo: https://github.com/streetsidesoftware/cspell-cli
     rev: v6.31.0
     hooks:
