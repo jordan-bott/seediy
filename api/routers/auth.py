@@ -24,8 +24,6 @@ class UserEntry(BaseModel):
     password: str
     password_conf: str
     zipcode: str
-    city: str
-    state: str
     first_frost: date
     last_frost: date
 
@@ -65,6 +63,11 @@ async def create_user(
             detail="Passwords do not match",
         )
 
+    # city/state for zipcode
+    z_url = f"http://ZiptasticAPI.com/{info.zipcode}"
+    z_response = requests.get(z_url)
+    z_dict = z_response.json()
+
     # Rapid API Plant Hardiness Zone
     zipcode = info.zipcode
     r_url = f"https://plant-hardiness-zone.p.rapidapi.com/zipcodes/{zipcode}"
@@ -78,7 +81,7 @@ async def create_user(
 
     # OpenWeather Lat & Lon
     ow_params = {
-        "q": f"{info.city},{info.state},US",
+        "q": f"{z_dict['city']},{z_dict['state']},{z_dict['country']}",
         "limit": 1,
         "appid": os.environ["OPEN_WEATHER_API_KEY"],
     }
@@ -115,6 +118,11 @@ async def create_admin(
             detail="Passwords do not match",
         )
 
+    # city/state for zipcode
+    z_url = f"http://ZiptasticAPI.com/{info.zipcode}"
+    z_response = requests.get(z_url)
+    z_dict = z_response.json()
+
     # Rapid API Plant Hardiness Zone
     zipcode = info.zipcode
     r_url = f"https://plant-hardiness-zone.p.rapidapi.com/zipcodes/{zipcode}"
@@ -128,7 +136,7 @@ async def create_admin(
 
     # OpenWeather Lat & Lon
     ow_params = {
-        "q": f"{info.city},{info.state},US",
+        "q": f"{z_dict['city']},{z_dict['state']},{z_dict['country']}",
         "limit": 1,
         "appid": os.environ["OPEN_WEATHER_API_KEY"],
     }
