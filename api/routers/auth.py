@@ -115,10 +115,8 @@ async def create_user(
 
 
 @router.get("/api/users", response_model=UserOut | dict)
-def get_user(
-    request: Request,
-):
-    # token: str = Depends(oauth2_scheme)
+def get_user(request: Request, token: str = Depends(oauth2scheme)):
+    # token: str = Depends(oauth2scheme)
     # ^ this will protect the endpoint, but it doesn't read the cookie in the
     #  browser
     # the way I get the token below does read the token from the browser,
