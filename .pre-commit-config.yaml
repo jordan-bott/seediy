@@ -21,6 +21,18 @@ repos:
     hooks:
       - id: prettier
         exclude: migrations, docs, journals, relational-data, api
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    rev: v8.51.0
+    hooks:
+      - id: eslint
+        additional_dependencies:
+          - eslint@8.24.0
+          - eslint-config-react-app@7.0.1
+          - eslint-plugin-react-hooks@4.6.0
+        exclude: node_modules
+        files: \.[jt]sx?$ # *.js, *.jsx, *.ts and *.tsx
+        types: [file]
+        args: [--max-warnings=0]
   - repo: https://github.com/streetsidesoftware/cspell-cli
     rev: v6.31.0
     hooks:
