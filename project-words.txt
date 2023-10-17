@@ -13,6 +13,10 @@ wireframe
 wireframes
 mooli
 psycopg
+pydantic
+passlib
+rapidapi
+conninfo
+pyjwt
 dockerfiles
 jwtdown
-pydantic
