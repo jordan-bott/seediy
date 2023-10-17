@@ -27,7 +27,6 @@ repos:
       - id: eslint
         additional_dependencies:
           - eslint@8.24.0
-          - eslint-config-react-app@7.0.1
           - eslint-plugin-react-hooks@4.6.0
         exclude: node_modules
         files: \.[jt]sx?$ # *.js, *.jsx, *.ts and *.tsx
