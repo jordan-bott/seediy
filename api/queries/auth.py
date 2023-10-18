@@ -16,6 +16,11 @@ class UserIn(BaseModel):
     last_frost: date
 
 
+class UserPasswordIn(BaseModel):
+    id: int
+    password_hash: str
+
+
 class UserUpdateIn(BaseModel):
     id: int
     username: str
@@ -190,6 +195,24 @@ class UserQueries:
                             info.last_frost,
                             info.id,
                         ],
+                    )
+                    user = result.fetchone()
+                    return self.user_out(user)
+        except Exception:
+            return {"error": "failed to update user"}
+
+    def update_password(self, info: UserPasswordIn) -> UserOut:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        UPDATE users
+                        SET password_hash = %s
+                        WHERE id = %s
+                        RETURNING *;
+                        """,
+                        [info.password_hash, info.id],
                     )
                     user = result.fetchone()
                     return self.user_out(user)

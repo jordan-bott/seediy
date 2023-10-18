@@ -10,6 +10,7 @@ from datetime import date
 from queries.auth import (
     UserIn,
     UserUpdateIn,
+    UserPasswordIn,
     UserOut,
     UserOutPass,
     UserQueries,
@@ -42,7 +43,7 @@ class UserUpdateEntry(BaseModel):
     last_frost: date
 
 
-class PasswordUpdate(BaseModel):
+class PasswordUpdateEntry(BaseModel):
     password: str
     password_conf: str
 
@@ -189,70 +190,93 @@ def get_user(token: str = Depends(oauth2scheme)):
 
 @router.put("/api/users/{user_id}", response_model=UserOut | dict)
 def update_user(
+    user_id: int,
     info: UserUpdateEntry,
     users: UserQueries = Depends(),
     token: str = Depends(oauth2scheme),
 ):
     user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
-    if user["zipcode"] != info.zipcode:
-        # city/state for zipcode
-        z_url = f"http://ZiptasticAPI.com/{info.zipcode}"
-        z_response = requests.get(z_url)
-        z_dict = z_response.json()
+    if user["id"] == user_id:
+        if user["zipcode"] != info.zipcode:
+            # city/state for zipcode
+            z_url = f"http://ZiptasticAPI.com/{info.zipcode}"
+            z_response = requests.get(z_url)
+            z_dict = z_response.json()
 
-        # Rapid API Plant Hardiness Zone
-        zipcode = info.zipcode
-        r_url = (
-            f"https://plant-hardiness-zone.p.rapidapi.com/zipcodes/{zipcode}"
-        )
-        headers = {
-            "X-RapidAPI-Key": os.environ["RAPID_API_KEY"],
-            "X-RapidAPI-Host": "plant-hardiness-zone.p.rapidapi.com",
-        }
+            # Rapid API Plant Hardiness Zone
+            z = info.zipcode
+            r_url = f"https://plant-hardiness-zone.p.rapidapi.com/zipcodes/{z}"
+            headers = {
+                "X-RapidAPI-Key": os.environ["RAPID_API_KEY"],
+                "X-RapidAPI-Host": "plant-hardiness-zone.p.rapidapi.com",
+            }
 
-        rapid_response = requests.get(r_url, headers=headers)
-        zone_dict = rapid_response.json()
+            rapid_response = requests.get(r_url, headers=headers)
+            zone_dict = rapid_response.json()
 
-        # OpenWeather Lat & Lon
-        ow_params = {
-            "q": f"{z_dict['city']},{z_dict['state']},{z_dict['country']}",
-            "limit": 1,
-            "appid": os.environ["OPEN_WEATHER_API_KEY"],
-        }
-        ow_url = "http://api.openweathermap.org/geo/1.0/direct"
-        ow_response = requests.get(ow_url, params=ow_params)
-        ow_content = json.loads(ow_response.content)
+            # OpenWeather Lat & Lon
+            ow_params = {
+                "q": f"{z_dict['city']},{z_dict['state']},{z_dict['country']}",
+                "limit": 1,
+                "appid": os.environ["OPEN_WEATHER_API_KEY"],
+            }
+            ow_url = "http://api.openweathermap.org/geo/1.0/direct"
+            ow_response = requests.get(ow_url, params=ow_params)
+            ow_content = json.loads(ow_response.content)
 
-        user_info = UserUpdateIn(
-            id=user["id"],
-            username=info.username,
-            email=info.email,
-            zipcode=info.zipcode,
-            lon=ow_content[0]["lon"],
-            lat=ow_content[0]["lat"],
-            zone=zone_dict["hardiness_zone"],
-            first_frost=info.first_frost,
-            last_frost=info.last_frost,
-        )
-        query = users.update(user_info)
-        if isinstance(query, dict):
-            raise HTTPException(status_code=400, detail="Bad Query")
+            user_info = UserUpdateIn(
+                id=user["id"],
+                username=info.username,
+                email=info.email,
+                zipcode=info.zipcode,
+                lon=ow_content[0]["lon"],
+                lat=ow_content[0]["lat"],
+                zone=zone_dict["hardiness_zone"],
+                first_frost=info.first_frost,
+                last_frost=info.last_frost,
+            )
+            query = users.update(user_info)
+            if isinstance(query, dict):
+                raise HTTPException(status_code=400, detail="Bad Query")
+            else:
+                return query
         else:
-            return query
+            user_info = UserUpdateIn(
+                id=user["id"],
+                username=info.username,
+                email=info.email,
+                zipcode=info.zipcode,
+                lon=user["lon"],
+                lat=user["lat"],
+                zone=user["zone"],
+                first_frost=info.first_frost,
+                last_frost=info.last_frost,
+            )
+            query = users.update(user_info)
+            if isinstance(query, dict):
+                raise HTTPException(status_code=400, detail="Bad Query")
+            else:
+                return query
     else:
-        user_info = UserUpdateIn(
-            id=user["id"],
-            username=info.username,
-            email=info.email,
-            zipcode=info.zipcode,
-            lon=user["lon"],
-            lat=user["lat"],
-            zone=user["zone"],
-            first_frost=info.first_frost,
-            last_frost=info.last_frost,
-        )
-        query = users.update(user_info)
-        if isinstance(query, dict):
-            raise HTTPException(status_code=400, detail="Bad Query")
-        else:
-            return query
+        return {"error": "not authorized to update that user"}
+
+
+@router.put("/api/users/{user_id}/password", response_model=UserOut | dict)
+def update_password(
+    user_id: int,
+    info: PasswordUpdateEntry,
+    users: UserQueries = Depends(),
+    token: str = Depends(oauth2scheme),
+):
+    user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
+    if user["id"] == user_id:
+        if info.password == info.password_conf:
+            password_hash = bcrypt.hash(info.password)
+            data = UserPasswordIn(id=user_id, password_hash=password_hash)
+            query = users.update_password(data)
+            if isinstance(query, dict):
+                raise HTTPException(status_code=400, detail="Bad Query")
+            else:
+                return query
+    else:
+        return {"error": "not authorized to update that user"}
