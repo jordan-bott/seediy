@@ -7,7 +7,7 @@ from fastapi import (
 
 from pydantic import BaseModel
 from datetime import date
-from queries.auth import (
+from queries.users import (
     UserIn,
     UserUpdateIn,
     UserPasswordIn,
