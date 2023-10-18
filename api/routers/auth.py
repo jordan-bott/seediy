@@ -193,9 +193,7 @@ def update_user(
     users: UserQueries = Depends(),
     token: str = Depends(oauth2scheme),
 ):
-    # try:
     user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
-    print(user)
     if user["zipcode"] != info.zipcode:
         # city/state for zipcode
         z_url = f"http://ZiptasticAPI.com/{info.zipcode}"
@@ -236,7 +234,11 @@ def update_user(
             first_frost=info.first_frost,
             last_frost=info.last_frost,
         )
-        return users.update(user_info)
+        query = users.update(user_info)
+        if isinstance(query, dict):
+            raise HTTPException(status_code=400, detail="Bad Query")
+        else:
+            return query
     else:
         user_info = UserUpdateIn(
             id=user["id"],
@@ -249,6 +251,8 @@ def update_user(
             first_frost=info.first_frost,
             last_frost=info.last_frost,
         )
-        return users.update(user_info)
-    # except Exception:
-    #     return {"error": "could not update that user"}
+        query = users.update(user_info)
+        if isinstance(query, dict):
+            raise HTTPException(status_code=400, detail="Bad Query")
+        else:
+            return query

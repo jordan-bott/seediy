@@ -162,36 +162,36 @@ class UserQueries:
             return {"error": "could not get that user"}
 
     def update(self, info: UserUpdateIn) -> UserOut:
-        # try:
-        with pool.connection() as conn:
-            with conn.cursor() as db:
-                result = db.execute(
-                    """
-                    UPDATE users
-                    SET username = %s,
-                        email = %s,
-                        zipcode = %s,
-                        lon = %s,
-                        lat = %s,
-                        zone = %s,
-                        first_frost = %s,
-                        last_frost = %s
-                    WHERE id = %s
-                    RETURNING *;
-                    """,
-                    [
-                        info.username,
-                        info.email,
-                        info.zipcode,
-                        info.lon,
-                        info.lat,
-                        info.zone,
-                        info.first_frost,
-                        info.last_frost,
-                        info.id,
-                    ],
-                )
-                user = result.fetchone()
-                return self.user_out(user)
-        # except Exception:
-        #     return {"error": "failed to update user"}
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        UPDATE users
+                        SET username = %s,
+                            email = %s,
+                            zipcode = %s,
+                            lon = %s,
+                            lat = %s,
+                            zone = %s,
+                            first_frost = %s,
+                            last_frost = %s
+                        WHERE id = %s
+                        RETURNING *;
+                        """,
+                        [
+                            info.username,
+                            info.email,
+                            info.zipcode,
+                            info.lon,
+                            info.lat,
+                            info.zone,
+                            info.first_frost,
+                            info.last_frost,
+                            info.id,
+                        ],
+                    )
+                    user = result.fetchone()
+                    return self.user_out(user)
+        except Exception:
+            return {"error": "failed to update user"}
