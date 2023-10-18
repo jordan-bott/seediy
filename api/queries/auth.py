@@ -218,3 +218,21 @@ class UserQueries:
                     return self.user_out(user)
         except Exception:
             return {"error": "failed to update user"}
+
+    def to_admin(self, user_id: int) -> UserOut:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        UPDATE users
+                        SET type = %s
+                        WHERE id = %s
+                        RETURNING *;
+                        """,
+                        ["admin", user_id],
+                    )
+                    user = result.fetchone()
+                    return self.user_out(user)
+        except Exception:
+            return {"error": "failed to update user"}

@@ -280,3 +280,20 @@ def update_password(
                 return query
     else:
         return {"error": "not authorized to update that user"}
+
+
+@router.put("/api/users/{user_id}/admin", response_model=UserOut | dict)
+def update_to_admin(
+    user_id: int,
+    users: UserQueries = Depends(),
+    token: str = Depends(oauth2scheme),
+):
+    user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
+    if user["type"] == "admin":
+        query = users.to_admin(user_id)
+        if isinstance(query, dict):
+            raise HTTPException(status_code=400, detail="Bad Query")
+        else:
+            return query
+    else:
+        return {"error": "not authorized to upgrade this user to admin"}
