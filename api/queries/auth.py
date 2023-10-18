@@ -16,6 +16,18 @@ class UserIn(BaseModel):
     last_frost: date
 
 
+class UserUpdateIn(BaseModel):
+    id: int
+    username: str
+    email: str
+    zipcode: str
+    lon: str
+    lat: str
+    zone: str
+    first_frost: date
+    last_frost: date
+
+
 class UserOut(BaseModel):
     id: int
     type: str
@@ -68,47 +80,68 @@ class UserQueries:
             low_temp=user[17],
         )
 
+    def user_out(self, user):
+        return UserOut(
+            id=user[0],
+            type=user[1],
+            username=user[2],
+            email=user[3],
+            verified=user[4],
+            posts=user[5],
+            sprouts=user[6],
+            date_created=str(user[7]),
+            units=user[9],
+            zipcode=user[10],
+            lon=user[11],
+            lat=user[12],
+            zone=user[13],
+            first_frost=str(user[14]),
+            last_frost=str(user[15]),
+            high_temp=user[16],
+            low_temp=user[17],
+        )
+
     def create(self, info: UserIn) -> UserOutPass:
-        with pool.connection() as conn:
-            with conn.cursor() as db:
-                print(db)
-                result = db.execute(
-                    """
-                    INSERT INTO users (
-                        type,
-                        username,
-                        email,
-                        password_hash,
-                        zipcode,
-                        lon,
-                        lat,
-                        zone,
-                        first_frost,
-                        last_frost
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    print(db)
+                    result = db.execute(
+                        """
+                        INSERT INTO users (
+                            type,
+                            username,
+                            email,
+                            password_hash,
+                            zipcode,
+                            lon,
+                            lat,
+                            zone,
+                            first_frost,
+                            last_frost
+                        )
+                        VALUES
+                            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                        RETURNING *;
+                        """,
+                        [
+                            info.type,
+                            info.username,
+                            info.email,
+                            info.password_hash,
+                            info.zipcode,
+                            info.lon,
+                            info.lat,
+                            info.zone,
+                            info.first_frost,
+                            info.last_frost,
+                        ],
                     )
-                    VALUES
-                        (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-                    RETURNING *;
-                    """,
-                    [
-                        info.type,
-                        info.username,
-                        info.email,
-                        info.password_hash,
-                        info.zipcode,
-                        info.lon,
-                        info.lat,
-                        info.zone,
-                        info.first_frost,
-                        info.last_frost,
-                    ],
-                )
-                print(result)
-                user = result.fetchone()
-                return self.user_pass_out(user)
-        # except Exception as e:
-        #     print(e)
-        #     return {"error": "could not create that user"}
+                    user = result.fetchone()
+                    return self.user_pass_out(user)
+        except Exception as e:
+            print(e)
+            return {"error": "could not create that user"}
 
     def get(self, username: str) -> UserOutPass:
         try:
@@ -127,3 +160,38 @@ class UserQueries:
         except Exception as e:
             print(e)
             return {"error": "could not get that user"}
+
+    def update(self, info: UserUpdateIn) -> UserOut:
+        # try:
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                result = db.execute(
+                    """
+                    UPDATE users
+                    SET username = %s,
+                        email = %s,
+                        zipcode = %s,
+                        lon = %s,
+                        lat = %s,
+                        zone = %s,
+                        first_frost = %s,
+                        last_frost = %s
+                    WHERE id = %s
+                    RETURNING *;
+                    """,
+                    [
+                        info.username,
+                        info.email,
+                        info.zipcode,
+                        info.lon,
+                        info.lat,
+                        info.zone,
+                        info.first_frost,
+                        info.last_frost,
+                        info.id,
+                    ],
+                )
+                user = result.fetchone()
+                return self.user_out(user)
+        # except Exception:
+        #     return {"error": "failed to update user"}
