@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from queries.pool import pool
 from datetime import date
+from typing import List
 
 
 class UserIn(BaseModel):
@@ -251,3 +252,22 @@ class UserQueries:
                     return True
         except Exception:
             return {"error": "failed to delete user"}
+
+    def get_all(self) -> List[UserOut]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT *
+                        FROM users
+                        """
+                    )
+                    user = result.fetchall()
+                    users = []
+                    for u in user:
+                        users.append(self.user_out(u))
+                    return users
+        except Exception as e:
+            print(e)
+            return {"error": "could not get list of users"}

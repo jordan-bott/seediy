@@ -5,7 +5,7 @@ from routers import users
 import os
 
 app = FastAPI()
-app.include_router(users.router, tags=["Authentication"])
+app.include_router(users.router, tags=["Users"])
 
 
 app.add_middleware(

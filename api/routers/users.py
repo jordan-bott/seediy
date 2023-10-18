@@ -7,6 +7,7 @@ from fastapi import (
 
 from pydantic import BaseModel
 from datetime import date
+from typing import List
 from queries.users import (
     UserIn,
     UserUpdateIn,
@@ -314,3 +315,19 @@ def delete_user(
             return query
     else:
         return {"not authorized to delete this user"}
+
+
+@router.get("/api/users/all", response_model=List[UserOut] | dict)
+def get_all_users(
+    users: UserQueries = Depends(),
+    token: str = Depends(oauth2scheme),
+):
+    user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
+    if user["type"] == "admin":
+        query = users.get_all()
+        if isinstance(query, dict):
+            raise HTTPException(status_code=400, detail="Bad Query")
+        else:
+            return query
+    else:
+        return {"error": "not authorized to view user list"}
