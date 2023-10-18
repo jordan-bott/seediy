@@ -236,3 +236,18 @@ class UserQueries:
                     return self.user_out(user)
         except Exception:
             return {"error": "failed to update user"}
+
+    def delete(self, user_id: int) -> bool:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE FROM users
+                        WHERE id = %s
+                        """,
+                        [user_id],
+                    )
+                    return True
+        except Exception:
+            return {"error": "failed to delete user"}

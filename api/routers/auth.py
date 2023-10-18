@@ -297,3 +297,20 @@ def update_to_admin(
             return query
     else:
         return {"error": "not authorized to upgrade this user to admin"}
+
+
+@router.delete("/api/users/{user_id}", response_model=bool | dict)
+def delete_user(
+    user_id: int,
+    users: UserQueries = Depends(),
+    token: str = Depends(oauth2scheme),
+):
+    user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
+    if user["id"] == user_id:
+        query = users.delete(user_id)
+        if isinstance(query, dict):
+            raise HTTPException(status_code=400, detail="Bad Query")
+        else:
+            return query
+    else:
+        return {"not authorized to delete this user"}
