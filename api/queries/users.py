@@ -111,7 +111,6 @@ class UserQueries:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    print(db)
                     result = db.execute(
                         """
                         INSERT INTO users (
