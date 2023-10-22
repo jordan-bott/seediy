@@ -31,3 +31,17 @@ def add_seed_storage(
         raise HTTPException(status_code=400, detail="Bad Query")
     else:
         return query
+
+
+@router.delete("/api/seedstorage/{id}", response_model=bool | dict)
+def delete_plant_type(
+    id: int,
+    repo: SeedStorageQueries = Depends(),
+    token: str = Depends(oauth2scheme),
+):
+    user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
+    query = repo.delete(id, user["id"])
+    if isinstance(query, dict):
+        raise HTTPException(status_code=400, detail="Bad Query")
+    else:
+        return query
