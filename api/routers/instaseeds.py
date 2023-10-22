@@ -42,3 +42,32 @@ def get_by_user(
         raise HTTPException(status_code=400, detail="Bad Query")
     else:
         return query
+
+
+@router.delete("/api/instaseeds/{id}", response_model=bool | dict)
+def delete(
+    id: int,
+    repo: InstaseedQueries = Depends(),
+    token: str = Depends(oauth2scheme),
+):
+    user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
+    query = repo.delete(id, user["id"])
+    if isinstance(query, dict):
+        raise HTTPException(status_code=400, detail="Bad Query")
+    else:
+        return query
+
+
+@router.put("/api/instaseeds/{id}", response_model=bool | dict)
+def update(
+    id: int,
+    info: InstaseedIn,
+    repo: InstaseedQueries = Depends(),
+    token: str = Depends(oauth2scheme),
+):
+    user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
+    query = repo.update(info, id, user["id"])
+    if isinstance(query, dict):
+        raise HTTPException(status_code=400, detail="Bad Query")
+    else:
+        return query
