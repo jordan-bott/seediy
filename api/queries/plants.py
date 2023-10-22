@@ -116,6 +116,27 @@ class PlantQueries:
             print(e)
             return {"error": "could not get that user's plants"}
 
+    def planted_by_user(self, user_id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT *
+                        FROM plants
+                        WHERE user_id = %s and currently_planted = %s
+                        """,
+                        [user_id, True],
+                    )
+                    plants = result.fetchall()
+                    plant_list = []
+                    for plant in plants:
+                        plant_list.append(self.plant_out(plant))
+                    return plant_list
+        except Exception as e:
+            print(e)
+            return {"error": "could not get that user's plants"}
+
     def delete(self, id: int, user_id: int):
         try:
             with pool.connection() as conn:

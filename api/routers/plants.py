@@ -68,6 +68,22 @@ def plants_by_user(
         return query
 
 
+@router.get(
+    "/api/users/{user_id}/plants/planted",
+    response_model=List[PlantsOut] | dict,
+)
+def planted_plants_by_user(
+    plants: PlantQueries = Depends(),
+    token: str = Depends(oauth2scheme),
+):
+    user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
+    query = plants.planted_by_user(user["id"])
+    if isinstance(query, dict):
+        raise HTTPException(status_code=400, detail="Bad Query")
+    else:
+        return query
+
+
 @router.delete("/api/plants/{id}", response_model=bool | dict)
 def delete_seed(
     id: int,
