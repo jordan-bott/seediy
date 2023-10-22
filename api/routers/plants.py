@@ -25,9 +25,11 @@ def add_plant(
 ):
     user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
     plant_query = plants.create(info, user["id"])
+    if isinstance(plant_query, dict):
+        raise HTTPException(status_code=400, detail="Bad Plant Query")
     seed_query = seeds.planted(plant_query.seed_id)
-    if isinstance(plant_query, dict) or isinstance(seed_query, dict):
-        raise HTTPException(status_code=400, detail="Bad Query")
+    if isinstance(seed_query, dict):
+        raise HTTPException(status_code=400, detail="Bad Seed Query")
     else:
         return plant_query
 
@@ -75,9 +77,33 @@ def delete_seed(
 ):
     user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
     plant_query = plants.delete(id, user["id"])
-    print(plant_query)
+    if isinstance(plant_query, dict):
+        raise HTTPException(status_code=400, detail="Bad Plant Query")
     seed_query = seeds.not_planted(id)
-    if isinstance(plant_query, dict) or isinstance(seed_query, dict):
-        raise HTTPException(status_code=400, detail="Bad Query")
+    if isinstance(seed_query, dict):
+        raise HTTPException(status_code=400, detail="Bad Seed Query")
     else:
         return plant_query
+
+
+@router.put("/api/plants/{id}/unplant", response_model=PlantsOut | dict)
+def unplant(
+    id: int,
+    user_id: int,
+    plants: PlantQueries = Depends(),
+    seeds: SeedQueries = Depends(),
+    token: str = Depends(oauth2scheme),
+):
+    user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
+    if user["id"] == user_id:
+        print("in the if")
+        plant_query = plants.unplant(id)
+        if isinstance(plant_query, dict):
+            raise HTTPException(status_code=400, detail="Bad Plant Query")
+        seed_query = seeds.not_planted(plant_query.seed_id)
+        if isinstance(seed_query, dict):
+            raise HTTPException(status_code=400, detail="Bad Seed Query")
+        else:
+            return plant_query
+    else:
+        return {"error": "not authorized to update this plant"}

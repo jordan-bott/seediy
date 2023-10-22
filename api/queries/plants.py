@@ -130,3 +130,21 @@ class PlantQueries:
                     return True
         except Exception:
             return {"error": "failed to delete plant"}
+
+    def unplant(self, id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        UPDATE plants
+                        SET currently_planted = %s
+                        WHERE id = %s
+                        RETURNING *;
+                        """,
+                        [False, id],
+                    )
+                    plant = result.fetchone()
+                    return self.plant_out(plant)
+        except Exception:
+            return {"error": "failed to update plant to unplanted"}

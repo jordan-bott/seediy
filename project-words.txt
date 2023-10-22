@@ -19,3 +19,4 @@ conninfo
 pyjwt
 planttype
 seedstorage
+unplant
