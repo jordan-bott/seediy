@@ -53,3 +53,24 @@ class PlantTypeQueries:
                     return True
         except Exception:
             return {"error": "failed to delete plant type"}
+
+    def get_by_user(self, user_id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT *
+                        FROM plant_types
+                        WHERE user_id = %s
+                        """,
+                        [user_id],
+                    )
+                    types = result.fetchall()
+                    type_list = []
+                    for type in types:
+                        type_list.append(self.plant_type_out(type))
+                    return type_list
+        except Exception as e:
+            print(e)
+            return {"error": "could not get plant type list for user"}

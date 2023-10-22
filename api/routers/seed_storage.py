@@ -3,6 +3,8 @@ from fastapi import (
     HTTPException,
     APIRouter,
 )
+
+from typing import List
 from fastapi.security import OAuth2PasswordBearer
 from queries.seed_storage import (
     SeedStorageIn,
@@ -41,6 +43,22 @@ def delete_plant_type(
 ):
     user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
     query = repo.delete(id, user["id"])
+    if isinstance(query, dict):
+        raise HTTPException(status_code=400, detail="Bad Query")
+    else:
+        return query
+
+
+@router.get(
+    "/api/user/{user_id}/seedstorage",
+    response_model=List[SeedStorageOut] | dict,
+)
+def seed_storage_by_user(
+    repo: SeedStorageQueries = Depends(),
+    token: str = Depends(oauth2scheme),
+):
+    user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
+    query = repo.get_by_user(user["id"])
     if isinstance(query, dict):
         raise HTTPException(status_code=400, detail="Bad Query")
     else:

@@ -61,3 +61,24 @@ class SeedStorageQueries:
                     return True
         except Exception:
             return {"error": "failed to delete seed storage"}
+
+    def get_by_user(self, user_id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT *
+                        FROM seed_storages
+                        WHERE user_id = %s
+                        """,
+                        [user_id],
+                    )
+                    storages = result.fetchall()
+                    storage_list = []
+                    for storage in storages:
+                        storage_list.append(self.seed_storage_out(storage))
+                    return storage_list
+        except Exception as e:
+            print(e)
+            return {"error": "could not get seed storage list for user"}

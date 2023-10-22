@@ -3,6 +3,7 @@ from fastapi import (
     HTTPException,
     APIRouter,
 )
+from typing import List
 from fastapi.security import OAuth2PasswordBearer
 from queries.plant_types import PlantTypeQueries, PlantTypeIn, PlantTypeOut
 
@@ -36,6 +37,21 @@ def delete_plant_type(
 ):
     user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
     query = types.delete(id, user["id"])
+    if isinstance(query, dict):
+        raise HTTPException(status_code=400, detail="Bad Query")
+    else:
+        return query
+
+
+@router.get(
+    "/api/user/{user_id}/planttype", response_model=List[PlantTypeOut] | dict
+)
+def plant_type_by_user(
+    types: PlantTypeQueries = Depends(),
+    token: str = Depends(oauth2scheme),
+):
+    user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
+    query = types.get_by_user(user["id"])
     if isinstance(query, dict):
         raise HTTPException(status_code=400, detail="Bad Query")
     else:
