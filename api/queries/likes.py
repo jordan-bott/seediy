@@ -40,3 +40,40 @@ class LikesQueries:
         except Exception as e:
             print(e)
             return {"error": "could not create that like"}
+
+    def unlike(self, post_id: int, user_id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE FROM likes
+                        WHERE post_id = %s AND user_id = %s
+                        """,
+                        [post_id, user_id],
+                    )
+                    return True
+        except Exception as e:
+            print(e)
+            return {"error": "could not remove that like"}
+
+    def get_by_post(self, post_id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT *
+                        FROM likes
+                        WHERE post_id = %s
+                        """,
+                        [post_id],
+                    )
+                    like_list = []
+                    likes = result.fetchall()
+                    for like in likes:
+                        like_list.append(self.likes_out(like))
+                    return like_list
+        except Exception as e:
+            print(e)
+            return {"error": "could not remove that like"}
