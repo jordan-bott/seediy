@@ -56,3 +56,24 @@ class WaterQueries:
                     return True
         except Exception:
             return {"error": "failed to delete water log"}
+
+    def get_by_user(self, user_id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT *
+                        FROM water_logs
+                        WHERE user_id = %s
+                        """,
+                        [user_id],
+                    )
+                    logs = result.fetchall()
+                    water_list = []
+                    for log in logs:
+                        water_list.append(self.water_out(log))
+                    return water_list
+        except Exception as e:
+            print(e)
+            return {"error": "could not get water log list for user"}

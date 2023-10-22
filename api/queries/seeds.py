@@ -117,7 +117,6 @@ class SeedQueries:
                     )
                     seeds = result.fetchall()
                     seed_list = []
-                    print(seeds)
                     for seed in seeds:
                         seed_list.append(self.seed_out(seed))
                     return seed_list

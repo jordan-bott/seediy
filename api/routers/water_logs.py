@@ -4,7 +4,7 @@ from fastapi import (
     APIRouter,
 )
 
-
+from typing import List
 from fastapi.security import OAuth2PasswordBearer
 from queries.water_logs import WaterQueries, WaterIn, WaterOut
 
@@ -38,6 +38,19 @@ def delete_water_log(
 ):
     user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
     query = logs.delete(id, user["id"])
+    if isinstance(query, dict):
+        raise HTTPException(status_code=400, detail="Bad Query")
+    else:
+        return query
+
+
+@router.get("/api/user/{user_id}/water", response_model=List[WaterOut] | dict)
+def water_logs_by_user(
+    logs: WaterQueries = Depends(),
+    token: str = Depends(oauth2scheme),
+):
+    user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
+    query = logs.get_by_user(user["id"])
     if isinstance(query, dict):
         raise HTTPException(status_code=400, detail="Bad Query")
     else:
