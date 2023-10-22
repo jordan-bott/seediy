@@ -6,6 +6,7 @@ from fastapi import (
 from typing import List
 from fastapi.security import OAuth2PasswordBearer
 from queries.plants import PlantQueries, PlantsIn, PlantsOut
+from queries.seeds import SeedQueries
 
 import jwt
 import os
@@ -19,14 +20,16 @@ JWT_KEY = os.environ["JWT_KEY"]
 def add_plant(
     info: PlantsIn,
     plants: PlantQueries = Depends(),
+    seeds: SeedQueries = Depends(),
     token: str = Depends(oauth2scheme),
 ):
     user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
-    query = plants.create(info, user["id"])
-    if isinstance(query, dict):
+    plant_query = plants.create(info, user["id"])
+    seed_query = seeds.planted(plant_query.seed_id)
+    if isinstance(plant_query, dict) or isinstance(seed_query, dict):
         raise HTTPException(status_code=400, detail="Bad Query")
     else:
-        return query
+        return plant_query
 
 
 @router.put("/api/plants/{id}", response_model=PlantsOut | dict)
@@ -67,11 +70,14 @@ def plants_by_user(
 def delete_seed(
     id: int,
     plants: PlantQueries = Depends(),
+    seeds: SeedQueries = Depends(),
     token: str = Depends(oauth2scheme),
 ):
     user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
-    query = plants.delete(id, user["id"])
-    if isinstance(query, dict):
+    plant_query = plants.delete(id, user["id"])
+    print(plant_query)
+    seed_query = seeds.not_planted(id)
+    if isinstance(plant_query, dict) or isinstance(seed_query, dict):
         raise HTTPException(status_code=400, detail="Bad Query")
     else:
-        return query
+        return plant_query
