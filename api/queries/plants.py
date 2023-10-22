@@ -115,3 +115,18 @@ class PlantQueries:
         except Exception as e:
             print(e)
             return {"error": "could not get that user's plants"}
+
+    def delete(self, id: int, user_id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE FROM plants
+                        WHERE id = %s AND user_id = %s
+                        """,
+                        [id, user_id],
+                    )
+                    return True
+        except Exception:
+            return {"error": "failed to delete plant"}

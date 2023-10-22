@@ -61,3 +61,17 @@ def plants_by_user(
         raise HTTPException(status_code=400, detail="Bad Query")
     else:
         return query
+
+
+@router.delete("/api/plants/{id}", response_model=bool | dict)
+def delete_seed(
+    id: int,
+    plants: PlantQueries = Depends(),
+    token: str = Depends(oauth2scheme),
+):
+    user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
+    query = plants.delete(id, user["id"])
+    if isinstance(query, dict):
+        raise HTTPException(status_code=400, detail="Bad Query")
+    else:
+        return query
