@@ -3,6 +3,8 @@ from fastapi import (
     HTTPException,
     APIRouter,
 )
+
+from typing import List
 from fastapi.security import OAuth2PasswordBearer
 from queries.seeds import SeedQueries, SeedIn, SeedOut
 
@@ -22,6 +24,19 @@ def add_seed(
 ):
     user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
     query = seeds.create(info, user["id"])
+    if isinstance(query, dict):
+        raise HTTPException(status_code=400, detail="Bad Query")
+    else:
+        return query
+
+
+@router.get("/api/user/{user_id}/seeds", response_model=List[SeedOut] | dict)
+def seeds_by_user(
+    seeds: SeedQueries = Depends(),
+    token: str = Depends(oauth2scheme),
+):
+    user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
+    query = seeds.get_by_user(user["id"])
     if isinstance(query, dict):
         raise HTTPException(status_code=400, detail="Bad Query")
     else:

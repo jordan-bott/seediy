@@ -53,7 +53,6 @@ class SeedQueries:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    print(db)
                     result = db.execute(
                         """
                         INSERT INTO seeds (
@@ -103,3 +102,24 @@ class SeedQueries:
         except Exception as e:
             print(e)
             return {"error": "could not create that plant type"}
+
+    def get_by_user(self, user_id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT *
+                        FROM seeds
+                        WHERE user_id = %s
+                        """,
+                        [user_id],
+                    )
+                    seeds = result.fetchall()
+                    seed_list = []
+                    for seed in seeds:
+                        seed_list.append(self.seed_out(seed))
+                    return seed_list
+        except Exception as e:
+            print(e)
+            return {"error": "could not get seed list for user"}
