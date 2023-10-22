@@ -63,3 +63,55 @@ class PlantQueries:
         except Exception as e:
             print(e)
             return {"error": "could not create that plant type"}
+
+    def update(self, info: PlantsIn, id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    print(db)
+                    result = db.execute(
+                        """
+                        UPDATE plants
+                        SET seed_id = %s,
+                            date_planted = %s,
+                            location = %s,
+                            harvest_date = %s,
+                            notes = %s
+                        WHERE id = %s
+                        RETURNING *;
+                        """,
+                        [
+                            info.seed_id,
+                            info.date_planted,
+                            info.location,
+                            info.harvest_date,
+                            info.notes,
+                            id,
+                        ],
+                    )
+                    plant = result.fetchone()
+                    return self.plant_out(plant)
+        except Exception as e:
+            print(e)
+            return {"error": "could not create that plant type"}
+
+    def by_user(self, user_id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT *
+                        FROM plants
+                        WHERE user_id = %s
+                        """,
+                        [user_id],
+                    )
+                    plants = result.fetchall()
+                    plant_list = []
+                    for plant in plants:
+                        plant_list.append(self.plant_out(plant))
+                    return plant_list
+        except Exception as e:
+            print(e)
+            return {"error": "could not get that user's plants"}
