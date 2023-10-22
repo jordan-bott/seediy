@@ -28,3 +28,17 @@ def add_water_log(
         raise HTTPException(status_code=400, detail="Bad Query")
     else:
         return query
+
+
+@router.delete("/api/water/{id}", response_model=bool | dict)
+def delete_water_log(
+    id: int,
+    logs: WaterQueries = Depends(),
+    token: str = Depends(oauth2scheme),
+):
+    user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
+    query = logs.delete(id, user["id"])
+    if isinstance(query, dict):
+        raise HTTPException(status_code=400, detail="Bad Query")
+    else:
+        return query

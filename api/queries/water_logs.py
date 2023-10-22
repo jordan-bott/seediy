@@ -41,3 +41,18 @@ class WaterQueries:
         except Exception as e:
             print(e)
             return {"error": "could not create that water log"}
+
+    def delete(self, id: int, user_id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE FROM water_logs
+                        WHERE id = %s AND user_id = %s
+                        """,
+                        [id, user_id],
+                    )
+                    return True
+        except Exception:
+            return {"error": "failed to delete water log"}
