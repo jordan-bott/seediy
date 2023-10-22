@@ -270,3 +270,21 @@ class UserQueries:
         except Exception as e:
             print(e)
             return {"error": "could not get list of users"}
+
+    def add_post(self, user_id: int) -> UserOut:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        UPDATE users
+                        SET posts = posts + 1
+                        WHERE id = %s
+                        RETURNING *;
+                        """,
+                        [user_id],
+                    )
+                    user = result.fetchone()
+                    return self.user_out(user)
+        except Exception:
+            return {"error": "failed to add post for that user"}
