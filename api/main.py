@@ -9,6 +9,7 @@ from routers import (
     plants,
     water_logs,
     topics,
+    instaseeds,
 )
 import os
 
@@ -20,6 +21,7 @@ app.include_router(seeds.router, tags=["Seeds"])
 app.include_router(plants.router, tags=["Plants"])
 app.include_router(water_logs.router, tags=["Water Logs"])
 app.include_router(topics.router, tags=["Topics"])
+app.include_router(instaseeds.router, tags=["Instaseeds"])
 
 
 app.add_middleware(
