@@ -14,8 +14,8 @@ class SeedIn(BaseModel):
     brand: str
     url: str
     category: str
-    plant_type_id: int
-    seed_storage_id: int
+    plant_type_id: int | None
+    seed_storage_id: int | None
     notes: str
 
 
@@ -117,6 +117,7 @@ class SeedQueries:
                     )
                     seeds = result.fetchall()
                     seed_list = []
+                    print(seeds)
                     for seed in seeds:
                         seed_list.append(self.seed_out(seed))
                     return seed_list
@@ -171,3 +172,18 @@ class SeedQueries:
         except Exception as e:
             print(e)
             return {"error": "could not update that seed"}
+
+    def delete(self, id: int, user_id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE FROM seeds
+                        WHERE id = %s AND user_id = %s
+                        """,
+                        [id, user_id],
+                    )
+                    return True
+        except Exception:
+            return {"error": "failed to delete seed"}
