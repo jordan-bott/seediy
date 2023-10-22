@@ -187,3 +187,75 @@ class SeedQueries:
                     return True
         except Exception:
             return {"error": "failed to delete seed"}
+
+    def planted(self, id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        UPDATE seeds
+                        SET planted = %s
+                        WHERE id = %s
+                        RETURNING *;
+                        """,
+                        [True, id],
+                    )
+                    seed = result.fetchone()
+                    return self.seed_out(seed)
+        except Exception:
+            return {"error": "failed to update seed to planted"}
+
+    def not_planted(self, id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        UPDATE seeds
+                        SET planted = %s
+                        WHERE id = %s
+                        RETURNING *;
+                        """,
+                        [False, id],
+                    )
+                    seed = result.fetchone()
+                    return self.seed_out(seed)
+        except Exception:
+            return {"error": "failed to update seed to planted"}
+
+    def add_to_list(self, id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        UPDATE seeds
+                        SET on_list = %s
+                        WHERE id = %s
+                        RETURNING *;
+                        """,
+                        [True, id],
+                    )
+                    seed = result.fetchone()
+                    return self.seed_out(seed)
+        except Exception:
+            return {"error": "failed to update seed to planted"}
+
+    def remove_from_list(self, id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        UPDATE seeds
+                        SET on_list = %s
+                        WHERE id = %s
+                        RETURNING *;
+                        """,
+                        [False, id],
+                    )
+                    seed = result.fetchone()
+                    return self.seed_out(seed)
+        except Exception:
+            return {"error": "failed to update seed to planted"}
