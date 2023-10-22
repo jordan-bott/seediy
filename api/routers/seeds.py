@@ -41,3 +41,22 @@ def seeds_by_user(
         raise HTTPException(status_code=400, detail="Bad Query")
     else:
         return query
+
+
+@router.put("/api/seeds/{seed_id}", response_model=SeedOut | dict)
+def update_seed(
+    seed_id: int,
+    user_id: int,
+    info: SeedIn,
+    seeds: SeedQueries = Depends(),
+    token: str = Depends(oauth2scheme),
+):
+    user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
+    if user_id == user["id"]:
+        query = seeds.update(info, seed_id)
+        if isinstance(query, dict):
+            raise HTTPException(status_code=400, detail="Bad Query")
+        else:
+            return query
+    else:
+        return {"error": "not authorized to update that seed"}

@@ -101,7 +101,7 @@ class SeedQueries:
                     return self.seed_out(seed)
         except Exception as e:
             print(e)
-            return {"error": "could not create that plant type"}
+            return {"error": "could not create that seed"}
 
     def get_by_user(self, user_id: int):
         try:
@@ -123,3 +123,51 @@ class SeedQueries:
         except Exception as e:
             print(e)
             return {"error": "could not get seed list for user"}
+
+    def update(self, info: SeedIn, id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        UPDATE seeds
+                        SET name = %s,
+                            nickname = %s,
+                            quantity = %s,
+                            days_to_harvest = %s,
+                            frost_hardy = %s,
+                            season = %s,
+                            water_needs = %s,
+                            rating = %s,
+                            brand = %s,
+                            url = %s,
+                            category = %s,
+                            plant_type_id = %s,
+                            seed_storage_id = %s,
+                            notes = %s
+                        WHERE id = %s
+                        RETURNING *;
+                        """,
+                        [
+                            info.name,
+                            info.nickname,
+                            info.quantity,
+                            info.days_to_harvest,
+                            info.frost_hardy,
+                            info.season,
+                            info.water_needs,
+                            info.rating,
+                            info.brand,
+                            info.url,
+                            info.category,
+                            info.plant_type_id,
+                            info.seed_storage_id,
+                            info.notes,
+                            id,
+                        ],
+                    )
+                    seed = result.fetchone()
+                    return self.seed_out(seed)
+        except Exception as e:
+            print(e)
+            return {"error": "could not update that seed"}
