@@ -12,6 +12,7 @@ from routers import (
     instaseeds,
     likes,
     blogs,
+    sprouts,
 )
 import os
 
@@ -26,6 +27,7 @@ app.include_router(topics.router, tags=["Topics"])
 app.include_router(instaseeds.router, tags=["Instaseeds"])
 app.include_router(likes.router, tags=["Likes"])
 app.include_router(blogs.router, tags=["Blogs"])
+app.include_router(sprouts.router, tags=["Sprouts"])
 
 
 app.add_middleware(
