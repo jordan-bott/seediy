@@ -13,6 +13,7 @@ from routers import (
     likes,
     blogs,
     sprouts,
+    blog_comments,
 )
 import os
 
@@ -28,6 +29,7 @@ app.include_router(instaseeds.router, tags=["Instaseeds"])
 app.include_router(likes.router, tags=["Likes"])
 app.include_router(blogs.router, tags=["Blogs"])
 app.include_router(sprouts.router, tags=["Sprouts"])
+app.include_router(blog_comments.router, tags=["Blog Comments"])
 
 
 app.add_middleware(

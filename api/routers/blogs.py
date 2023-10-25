@@ -7,6 +7,7 @@ from fastapi import (
 from typing import List
 from fastapi.security import OAuth2PasswordBearer
 from queries.blogs import BlogQueries, BlogIn, BlogOut
+from queries.users import UserQueries
 
 import jwt
 import os
@@ -20,14 +21,18 @@ JWT_KEY = os.environ["JWT_KEY"]
 def add_blog(
     info: BlogIn,
     blogs: BlogQueries = Depends(),
+    users: UserQueries = Depends(),
     token: str = Depends(oauth2scheme),
 ):
     user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
-    query = blogs.create(info, user["id"])
-    if isinstance(query, dict):
-        raise HTTPException(status_code=400, detail="Bad Query")
+    blog_query = blogs.create(info, user["id"])
+    if isinstance(blog_query, dict):
+        raise HTTPException(status_code=400, detail="Bad Blog Query")
+    user_query = users.add_blog(user["id"])
+    if isinstance(user_query, dict):
+        raise HTTPException(status_code=400, detail="Bad User Query")
     else:
-        return query
+        return blog_query
 
 
 @router.get("/api/blogs", response_model=List[BlogOut] | dict)
