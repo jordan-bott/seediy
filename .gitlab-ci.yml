@@ -64,7 +64,7 @@ deploy-to-s3:
     - build-front-end-job
   script:
     - aws --version
-    - aws s3 sync public s3://${AWS_S3_BUCKET} --delete
+    - aws s3 sync build s3://${AWS_S3_BUCKET} --delete
 # # Deploy the React/JavaScript front-end to GitLab pages
 # pages:
 #   stage: deploy
