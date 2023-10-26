@@ -22,7 +22,7 @@ deploy-to-s3:
   script:
     - aws --version
     - echo "hello s3" > test.txt
-    - aws s3 cp test.txt s3://seediy-profile-pictures/test.txt
+    - aws s3 cp test.txt s3://${AWS_S3_BUCKET}/test.txt
 # # Run the unit tests
 # api-unit-tests-job:
 #   image: python:3-bullseye
