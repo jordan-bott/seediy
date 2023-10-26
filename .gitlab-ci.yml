@@ -53,18 +53,20 @@ build-front-end-job:
     - cp -a dist/. public/
   artifacts:
     paths:
-      - build
+      - build/
 
 deploy-to-s3:
   stage: deploy
   image:
     name: amazon/aws-cli:latest
     entrypoint: [""]
+  dependencies:
+    - build-front-end-job
   needs:
     - build-front-end-job
   script:
     - aws --version
-    - aws s3 sync build s3://${AWS_S3_BUCKET} --delete
+    - aws s3 sync build/ s3://${AWS_S3_BUCKET} --delete
 # # Deploy the React/JavaScript front-end to GitLab pages
 # pages:
 #   stage: deploy
