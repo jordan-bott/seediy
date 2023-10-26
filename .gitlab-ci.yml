@@ -40,7 +40,7 @@ lint-test-job:
 #   only:
 #     - main
 
-# Build the React/JavaScript front-end
+# Build the React/JavaScript front-end check check
 build-front-end-job:
   stage: build
   image: node:lts-bullseye
