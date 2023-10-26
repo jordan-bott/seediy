@@ -54,6 +54,8 @@ build-front-end-job:
   artifacts:
     paths:
       - ghi/public/
+  only:
+    - main
 
 deploy-to-s3:
   stage: deploy
@@ -67,17 +69,5 @@ deploy-to-s3:
   script:
     - aws --version
     - aws s3 sync ghi/public/ s3://${AWS_S3_BUCKET} --delete
-# # Deploy the React/JavaScript front-end to GitLab pages
-# pages:
-#   stage: deploy
-#   rules:
-#     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-#   dependencies:
-#     - build-front-end-job
-#   needs:
-#     - build-front-end-job
-#   script:
-#     - mv ghi/build/ public
-#   artifacts:
-#     paths:
-#       - public
+  only:
+    - main
