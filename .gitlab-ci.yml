@@ -13,6 +13,14 @@ lint-test-job:
   script:
     - pip install flake8
     - flake8 api
+
+deploy-to-s3:
+  stage: deploy
+  image:
+    name: amazon/aws-cli:latest
+    entrypoint: [""]
+  script:
+    - aws --version
 # # Run the unit tests
 # api-unit-tests-job:
 #   image: python:3-bullseye
