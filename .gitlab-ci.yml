@@ -53,7 +53,7 @@ build-front-end-job:
     - cp -a dist/. public/
   artifacts:
     paths:
-      - build/
+      - public
 
 deploy-to-s3:
   stage: deploy
