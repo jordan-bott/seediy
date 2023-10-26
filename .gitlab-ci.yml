@@ -65,7 +65,7 @@ build-front-end-job:
     - cd ghi
     - npm install
     - npm run build
-    - cp ghi/index.html ghi/404.html
+    - cp <root>/index.html <root>/404.html
   artifacts:
     paths:
       - ghi/build/
