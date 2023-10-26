@@ -14,14 +14,6 @@ lint-test-job:
     - pip install flake8
     - flake8 api
 
-# deploy-to-s3:
-#   stage: deploy
-#   image:
-#     name: amazon/aws-cli:latest
-#     entrypoint: [""]
-#   script:
-#     - aws --version
-#     - aws s3 sync test.txt s3://${AWS_S3_BUCKET}/test.txt
 # # Run the unit tests
 # api-unit-tests-job:
 #   image: python:3-bullseye
@@ -54,13 +46,6 @@ build-front-end-job:
   image: node:lts-bullseye
   needs:
     - lint-test-job
-  variables:
-    # If either of these variables is defined in the GitLab
-    # CI/CD variables, that value will override the value here.
-    # You need to substitute in your real values for
-    # GROUP_NAME, PROJECT_NAME, & WEBSERVICE_NAME below.
-    PUBLIC_URL: https://GROUP_NAME.gitlab.io/PROJECT_NAME/
-    REACT_APP_API_HOST: https://DEPLOYED_API_SERVICE.mod3projects.com
   script:
     - cd ghi
     - npm install
@@ -69,6 +54,15 @@ build-front-end-job:
   artifacts:
     paths:
       - public
+
+deploy-to-s3:
+  stage: deploy
+  image:
+    name: amazon/aws-cli:latest
+    entrypoint: [""]
+  script:
+    - aws --version
+    - aws s3 sync test.txt s3://${AWS_S3_BUCKET} --delete
 # # Deploy the React/JavaScript front-end to GitLab pages
 # pages:
 #   stage: deploy
