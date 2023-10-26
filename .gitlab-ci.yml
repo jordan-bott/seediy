@@ -65,10 +65,10 @@ build-front-end-job:
     - cd ghi
     - npm install
     - npm run build
-    - cp <root>/index.html <root>/404.html
+    - cp -a dist/. public/
   artifacts:
     paths:
-      - ghi/build/
+      - public
 # # Deploy the React/JavaScript front-end to GitLab pages
 # pages:
 #   stage: deploy
