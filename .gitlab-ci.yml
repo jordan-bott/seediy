@@ -27,15 +27,22 @@ lint-test-job:
 
 # Build API Image:
 build-api-image:
-  stage: build
-  image: docker:git
+  image: docker:latest
+  services:
+    - docker:dind
   variables:
-    GITLAB_IMAGE: ${CI_REGISTRY_IMAGE}/api
-  before_script:
-    - echo $CI_JOB_TOKEN | docker login -u gitlab-ci-token registry.gitlab.com --password-stdin
-  script:
-    - docker build --tag $GITLAB_IMAGE:latest ./api
-    - docker push $GITLAB_IMAGE:latest
+    DOCKER_DRIVER: overlay
+  stages:
+    - build
+  docker-build:
+    stage: build
+    script:
+      - docker build -f Dockerfile --iidfile imageid.txt -t registry.heroku.com/seediy-api/web .
+      - docker login -u _ -p $HEROKU_TOKEN registry.heroku.com
+      - docker push registry.heroku.com/seediy-api/web
+      - apk add --no-cache curl
+      - |-
+        curl -X PATCH https://api.heroku.com/apps/seediy-api/formation --header "Content-Type: application/json" --header "Accept: application/vnd.heroku+json; version=3.docker-releases" --header "Authorization: Bearer ${HEROKU_TOKEN}" --data '{ "updates": [ { "type": "web", "docker_image": "'$(cat imageid.txt)'" } ] }'
   only:
     - main
 
