@@ -21,4 +21,4 @@ RUN python -m pip install -r requirements.txt
 COPY migrations migrations
 # # !! PORT env var needs to match with exposed port in caprover dashboard
 
-CMD uvicorn main:app --host 0.0.0.0 --port=$PORT
+CMD uvicorn app:app --host 0.0.0.0 --port $PORT
