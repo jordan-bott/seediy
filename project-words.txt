@@ -24,3 +24,12 @@ instaseeds
 instaseed
 insta
 instas
+tailwindcss
+reduxjs
+lgreen
+mgreen
+dgreen
+lgrey
+dgrey
+toastify
+Mooli

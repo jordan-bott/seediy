@@ -3,6 +3,8 @@ from fastapi import (
     HTTPException,
     status,
     APIRouter,
+    Response,
+    Request,
 )
 
 from pydantic import BaseModel
@@ -56,8 +58,20 @@ JWT_KEY = os.environ["JWT_KEY"]
 router = APIRouter()
 
 
+def get_cookie_settings(request: Request):
+    headers = request.headers
+    samesite = "none"
+    secure = True
+    if "origin" in headers and "localhost" in headers["origin"]:
+        samesite = "lax"
+        secure = False
+    return samesite, secure
+
+
 @router.post("/token")
 async def generate_token(
+    request: Request,
+    response: Response,
     form_data: OAuth2PasswordRequestForm = Depends(),
     users: UserQueries = Depends(),
 ):
@@ -66,9 +80,32 @@ async def generate_token(
         user_dict = user.dict()
         del user_dict["password_hash"]
         token = jwt.encode(user_dict, JWT_KEY)
+        samesite, secure = get_cookie_settings(request)
+        response.set_cookie(
+            key="seediy_token",
+            value=token,
+            httponly=True,
+            samesite=samesite,
+            secure=secure,
+        )
         return {"access_token": token, "token_type": "bearer"}
     else:
-        return {"error": "token not created"}
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Incorrect username or password",
+        )
+
+
+@router.delete("/token")
+async def delete_token(
+    request: Request,
+    response: Response,
+):
+    samesite, secure = get_cookie_settings(request)
+    response.delete_cookie(
+        key="seediy_token", httponly=True, samesite=samesite, secure=secure
+    )
+    return True
 
 
 @router.post("/api/users", response_model=UserOutPass)
