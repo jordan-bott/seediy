@@ -13,7 +13,6 @@ lint-test-job:
   script:
     - pip install flake8
     - flake8 api
-
 # # Run the unit tests
 # api-unit-tests-job:
 #   image: python:3-bullseye
@@ -26,64 +25,64 @@ lint-test-job:
 #     - python -m pytest
 
 # Build API Image:
-build-api-image:
-  image: docker:latest
-  variables:
-    DOCKER_DRIVER: overlay
-  stage: build
-  script:
-    - docker build -f Dockerfile --iidfile imageid.txt -t registry.heroku.com/seediy-api/my-app .
-    - docker login -u _ -p $HEROKU_TOKEN registry.heroku.com
-    - docker push registry.heroku.com/seediy-api/my-app
-    - apk add --no-cache curl
-    - |-
-      curl -X PATCH https://api.heroku.com/apps/seediy-api/formation --header "Content-Type: application/json" --header "Accept: application/vnd.heroku+json; version=3.docker-releases" --header "Authorization: Bearer ${HEROKU_TOKEN}" --data '{ "updates": [ { "type": "web", "docker_image": "'$(cat imageid.txt)'" } ] }'
-  only:
-    - main
+# build-api-image:
+#   image: docker:latest
+#   variables:
+#     DOCKER_DRIVER: overlay
+#   stage: build
+#   script:
+#     - docker build -f Dockerfile --iidfile imageid.txt -t registry.heroku.com/seediy-api/my-app .
+#     - docker login -u _ -p $HEROKU_TOKEN registry.heroku.com
+#     - docker push registry.heroku.com/seediy-api/my-app
+#     - apk add --no-cache curl
+#     - |-
+#       curl -X PATCH https://api.heroku.com/apps/seediy-api/formation --header "Content-Type: application/json" --header "Accept: application/vnd.heroku+json; version=3.docker-releases" --header "Authorization: Bearer ${HEROKU_TOKEN}" --data '{ "updates": [ { "type": "web", "docker_image": "'$(cat imageid.txt)'" } ] }'
+#   only:
+#     - main
 
-# Build the React/JavaScript front-end
-build-front-end-job:
-  stage: build
-  image: node:lts-bullseye
-  needs:
-    - lint-test-job
-  script:
-    - cd ghi
-    - npm install
-    - npm run build
-    - cp -a dist/. public/
-  artifacts:
-    paths:
-      - ghi/public/
-  only:
-    - main
+# # Build the React/JavaScript front-end
+# build-front-end-job:
+#   stage: build
+#   image: node:lts-bullseye
+#   needs:
+#     - lint-test-job
+#   script:
+#     - cd ghi
+#     - npm install
+#     - npm run build
+#     - cp -a dist/. public/
+#   artifacts:
+#     paths:
+#       - ghi/public/
+#   only:
+#     - main
 
-deploy-to-s3:
-  stage: deploy
-  image:
-    name: amazon/aws-cli:latest
-    entrypoint: [""]
-  dependencies:
-    - build-front-end-job
-  needs:
-    - build-front-end-job
-  script:
-    - aws --version
-    - aws s3 sync ghi/public/ s3://${AWS_S3_BUCKET} --delete
-  only:
-    - main
+# deploy-to-s3:
+#   stage: deploy
+#   image:
+#     name: amazon/aws-cli:latest
+#     entrypoint: [""]
+#   dependencies:
+#     - build-front-end-job
+#   needs:
+#     - build-front-end-job
+#   script:
+#     - aws --version
+#     - aws s3 sync ghi/public/ s3://${AWS_S3_BUCKET} --delete
+#   only:
+#     - main
 
-deploy-to-heroku:
-  image: ruby:2.7
-  stage: deploy
-  before_script:
-    - gem install dpl
-    - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
-  script:
-    - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_PRODUCTION_KEY
-    - heroku run --app $HEROKU_APP_NAME migrate
-  environment:
-    name: production
-    url: https://$HEROKU_APP_NAME.herokuapp.com
-  only:
-    - main
+# deploy-to-heroku:
+#   image: ruby:2.7
+#   stage: deploy
+#   before_script:
+#     - gem install dpl
+#     - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
+#   script:
+#     - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_PRODUCTION_KEY
+#     - heroku run --app $HEROKU_APP_NAME migrate
+#   environment:
+#     name: production
+#     url: https://$HEROKU_APP_NAME.herokuapp.com
+#   only:
+#     - main
