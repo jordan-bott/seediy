@@ -18,6 +18,16 @@ export const apiSlice = createApi({
     return headers;
   },
   endpoints: (builder) => ({
+    signup: builder.mutation({
+      query: (info) => {
+        return {
+          url: "/api/users",
+          method: "post",
+          body: info,
+        };
+      },
+      invalidatesTags: ["Token"],
+    }),
     login: builder.mutation({
       query: (info) => {
         let formData = null;
@@ -60,6 +70,7 @@ export const apiSlice = createApi({
 });
 
 export const {
+  useSignupMutation,
   useLoginMutation,
   useLogoutMutation,
   useGetUserQuery,

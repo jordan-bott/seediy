@@ -45,7 +45,7 @@ export default function Login() {
     <div>
       <div className="flex place-content-center items-center h-[100vh] w-[100vw]">
         <LeafyBackground />
-        <div className="z-40 border-2 border-dgrey m-16 flex flex-col place-content-center w-[30vw] h-[40vh] big-box justify-self-center">
+        <div className="z-40 border-2 border-dgrey m-16 flex flex-col place-content-center w-[500px] h-[375px] big-box justify-self-center">
           <p className="text-3xl m-3 w-100 text-center mb-8">
             Welcome Back to Seediy!
           </p>
@@ -70,7 +70,7 @@ export default function Login() {
             />
             <button
               onClick={() => setShowPass(!showPass)}
-              className="h-[25px] w-[25px] absolute right-[26.5%]"
+              className="h-[25px] w-[25px] absolute right-[22.5%]"
             >
               <img
                 src={
