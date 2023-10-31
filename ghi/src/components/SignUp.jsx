@@ -46,7 +46,7 @@ export default function Signup() {
         if (!loginResponse.error) {
           setUsername("");
           setPassword("");
-          toast("Welcome back!");
+          toast("Welcome to Seediy! 🌱");
           navigate("/dashboard");
         } else {
           toast("Incorrect username or password");
@@ -56,7 +56,7 @@ export default function Signup() {
         toast("Sign Up was not successful, please try again.");
       }
     } else {
-      toast("Oops! Passwords do not match.");
+      toast("Oops! Passwords do not match 🫣");
     }
   };
 
@@ -104,7 +104,7 @@ export default function Signup() {
             Welcome to Seediy!
           </p>
           <div className="flex">
-            <div>
+            <div className="flex items-end flex-col ml-8">
               <div className="flex place-content-center items-center">
                 <p>Username: </p>
                 <input
@@ -136,30 +136,7 @@ export default function Signup() {
                 />
                 <button
                   onClick={() => setShowPass(!showPass)}
-                  className="h-[25px] w-[25px] absolute right-[18%]"
-                >
-                  <img
-                    src={
-                      showPass
-                        ? "https://img.icons8.com/sf-ultralight/25/000000/invisible.png"
-                        : "https://img.icons8.com/sf-ultralight/25/000000/visible.png"
-                    }
-                    alt="show/hide password"
-                  />
-                </button>
-              </div>
-              <div className="relative flex place-content-center items-center">
-                <p className="pl-3">Password Confirmation: </p>
-                <input
-                  type={showPass ? "text" : "password"}
-                  name="passwordConf"
-                  onChange={handlePasswordConfChange}
-                  value={passwordConf}
-                  className="m-4 box px-2"
-                />
-                <button
-                  onClick={() => setShowPass(!showPass)}
-                  className="h-[25px] w-[25px] absolute right-[5%]"
+                  className="h-[25px] w-[25px] absolute right-[6%]"
                 >
                   <img
                     src={
@@ -172,7 +149,7 @@ export default function Signup() {
                 </button>
               </div>
             </div>
-            <div>
+            <div className="flex items-start flex-col ml-8">
               <div className="flex place-content-center items-center">
                 <p>Zipcode: </p>
                 <input
@@ -203,6 +180,31 @@ export default function Signup() {
                   className="m-4 box px-2"
                 />
               </div>
+            </div>
+          </div>
+          <div>
+            <div className="relative flex place-content-start items-center ml-4">
+              <p className="pl-3">Retype your password:</p>
+              <input
+                type={showPass ? "text" : "password"}
+                name="passwordConf"
+                onChange={handlePasswordConfChange}
+                value={passwordConf}
+                className="m-4 box px-2"
+              />
+              <button
+                onClick={() => setShowPass(!showPass)}
+                className="h-[25px] w-[25px] absolute right-[45%]"
+              >
+                <img
+                  src={
+                    showPass
+                      ? "https://img.icons8.com/sf-ultralight/25/000000/invisible.png"
+                      : "https://img.icons8.com/sf-ultralight/25/000000/visible.png"
+                  }
+                  alt="show/hide password"
+                />
+              </button>
             </div>
           </div>
           <div className="flex flex-col place-content-center mt-8">

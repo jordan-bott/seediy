@@ -24,12 +24,12 @@ function App() {
             pauseOnHover
             theme="light"
             toastStyle={{
-              backgroundColor: "#fff5db",
-              color: "#79aadd",
+              backgroundColor: "#eaf2cf",
+              color: "#4b5858",
               fontFamily: "Mooli",
-              border: "2px solid #79aadd ",
+              border: "2px solid #cbd081",
               borderRadius: "5px",
-              marginBottom: "50px",
+              marginBottom: "40px",
             }}
           />
           <NavBar />

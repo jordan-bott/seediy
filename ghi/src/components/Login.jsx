@@ -23,7 +23,7 @@ export default function Login() {
     if (!loginResponse.error) {
       setUsername("");
       setPassword("");
-      toast("Welcome back!");
+      toast("Welcome back! 🌱");
       navigate("/dashboard");
     } else {
       toast("Incorrect username or password");
