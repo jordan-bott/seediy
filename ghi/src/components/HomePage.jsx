@@ -15,5 +15,9 @@ export default function HomePage() {
   //     }
   //   };
 
-  return <p>Hello!</p>;
+  return (
+    <div className="h-[90vh]">
+      <p>Home page!</p>
+    </div>
+  );
 }

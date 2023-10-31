@@ -20,7 +20,7 @@ repos:
     rev: v2.0.0
     hooks:
       - id: prettier
-        exclude: migrations, docs, journals, relational-data, api
+        exclude: migrations, docs, journals, relational-data, api, ghi/src/nav-assets
   - repo: https://github.com/pre-commit/mirrors-eslint
     rev: v8.51.0
     hooks:
