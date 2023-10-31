@@ -28,6 +28,16 @@ export const apiSlice = createApi({
       },
       invalidatesTags: ["Token"],
     }),
+    adminSignup: builder.mutation({
+      query: (info) => {
+        return {
+          url: "/api/users/admin",
+          method: "post",
+          body: info,
+        };
+      },
+      invalidatesTags: ["Token"],
+    }),
     login: builder.mutation({
       query: (info) => {
         let formData = null;
@@ -56,16 +66,6 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Token"],
     }),
-    getUser: builder.query({
-      query: (token) => ({
-        url: "/api/users",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }),
-      providesTags: ["Token"],
-    }),
   }),
 });
 
@@ -73,5 +73,4 @@ export const {
   useSignupMutation,
   useLoginMutation,
   useLogoutMutation,
-  useGetUserQuery,
 } = apiSlice;
