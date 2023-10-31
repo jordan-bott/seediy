@@ -36,12 +36,12 @@ function App() {
           <NavBar />
           <Routes>
             <Route index element={<HomePage />} />
-            <Route path="/admin">
-              <Route path="/signup" element={<AdminSignup />} />
+            <Route path="signup" element={<Signup />} />
+            <Route path="login" element={<Login />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="admin">
+              <Route path="signup" element={<AdminSignup />} />
             </Route>
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </div>
       </BrowserRouter>

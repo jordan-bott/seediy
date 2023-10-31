@@ -1,10 +1,10 @@
 import { apiSlice } from "../apiSlice";
 
-export const plantTypeApiSlice = apiSlice.injectEndpoints({
+export const seedStorageApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    addPlantType: builder.mutation({
+    addSeedStorage: builder.mutation({
       query: ({ info, token }) => ({
-        url: "/api/planttype",
+        url: "/api/seedstorage",
         method: "post",
         body: info,
         headers: {
@@ -13,12 +13,12 @@ export const plantTypeApiSlice = apiSlice.injectEndpoints({
         },
       }),
       invalidatesTags: (result, error, arg) => [
-        { type: "PlantType", id: arg.id },
+        { type: "SeedStorage", id: arg.id },
       ],
     }),
-    deletePlantType: builder.mutation({
+    deleteSeedStorage: builder.mutation({
       query: ({ id, token }) => ({
-        url: `/api/planttype/${id}`,
+        url: `/api/seedstorage/${id}`,
         method: "delete",
         headers: {
           "Content-Type": "application/json",
@@ -26,27 +26,27 @@ export const plantTypeApiSlice = apiSlice.injectEndpoints({
         },
       }),
       invalidatesTags: (result, error, arg) => [
-        { type: "PlantType", id: arg.id },
+        { type: "SeedStorage", id: arg.id },
       ],
     }),
-    plantTypeByUser: builder.query({
+    seedStorageByUser: builder.query({
       query: ({ id, token }) => ({
-        url: `/api/user/${id}/planttype`,
+        url: `/api/user/${id}/seedstorage`,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       }),
       providesTags: (result = [], error, arg) => [
-        "PlantType",
-        ...result.map(({ id }) => ({ type: "PlantType", id })),
+        "SeedStorage",
+        ...result.map(({ id }) => ({ type: "SeedStorage", id })),
       ],
     }),
   }),
 });
 
 export const {
-  useAddPlantTypeMutation,
-  useDeletePlantTypeMutation,
-  usePlantTypeByUserQuery,
-} = plantTypeApiSlice;
+  useAddSeedStorageMutation,
+  useDeleteSeedStorageMutation,
+  useSeedStorageByUserQuery,
+} = seedStorageApiSlice;
