@@ -1,10 +1,10 @@
-import homeNav from "../nav-assets/home-nav.svg";
-import seedNav from "../nav-assets/seed-nav.svg";
-import instaseedNav from "../nav-assets/instaseed-nav.svg";
-import blogNav from "../nav-assets/blog-nav.svg";
-import gardenNav from "../nav-assets/garden-nav.svg";
-import harvestNav from "../nav-assets/harvest-nav.svg";
-import weatherNav from "../nav-assets/weather-nav.svg";
+import homeNav from "../assets/nav/home-nav.svg";
+import seedNav from "../assets/nav/seed-nav.svg";
+import instaseedNav from "../assets/nav/instaseed-nav.svg";
+import blogNav from "../assets/nav/blog-nav.svg";
+import gardenNav from "../assets/nav/garden-nav.svg";
+import harvestNav from "../assets/nav/harvest-nav.svg";
+import weatherNav from "../assets/nav/weather-nav.svg";
 
 export default function NavImage(pathname) {
   const path = pathname.props;

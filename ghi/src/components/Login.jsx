@@ -10,6 +10,7 @@ export default function Login() {
   const [loginUser] = useLoginMutation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPass, setShowPass] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -23,7 +24,7 @@ export default function Login() {
       setUsername("");
       setPassword("");
       toast("Welcome back!");
-      navigate("/");
+      navigate("/dashboard");
     } else {
       toast("Incorrect username or password");
     }
@@ -55,18 +56,31 @@ export default function Login() {
               name="username"
               onChange={handleUsernameChange}
               value={username}
-              className="m-4 box"
+              className="m-4 box px-2"
             />
           </div>
-          <div className="flex place-content-center items-center">
+          <div className="relative flex place-content-center items-center">
             <p>Password: </p>
             <input
-              type="password"
+              type={showPass ? "text" : "password"}
               name="password"
               onChange={handlePasswordChange}
               value={password}
-              className="m-4 box"
+              className="m-4 box px-2"
             />
+            <button
+              onClick={() => setShowPass(!showPass)}
+              className="h-[25px] w-[25px] absolute right-[15%]"
+            >
+              <img
+                src={
+                  showPass
+                    ? "https://img.icons8.com/sf-ultralight/25/000000/invisible.png"
+                    : "https://img.icons8.com/sf-ultralight/25/000000/visible.png"
+                }
+                alt="show/hide password"
+              />
+            </button>
           </div>
           <div className="flex place-content-center mt-8">
             <button

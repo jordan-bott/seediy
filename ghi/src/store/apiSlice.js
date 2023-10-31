@@ -38,6 +38,14 @@ export const apiSlice = createApi({
       },
       invalidatesTags: ["Token"],
     }),
+    logout: builder.mutation({
+      query: () => ({
+        url: "/token",
+        method: "delete",
+        credentials: "include",
+      }),
+      invalidatesTags: ["Token"],
+    }),
     getUser: builder.query({
       query: (token) => ({
         url: "/api/users",
@@ -51,4 +59,8 @@ export const apiSlice = createApi({
   }),
 });
 
-export const { useLoginMutation, useGetUserQuery } = apiSlice;
+export const {
+  useLoginMutation,
+  useLogoutMutation,
+  useGetUserQuery,
+} = apiSlice;
