@@ -46,7 +46,7 @@ export default function Login() {
       <div className="flex place-content-center items-center h-[100vh] w-[100vw]">
         <LeafyBackground />
         <div className="z-40 border-2 border-dgrey m-16 flex flex-col place-content-center w-[30vw] h-[40vh] big-box justify-self-center">
-          <p className="text-3xl m-3 w-100 text-center mb-12">
+          <p className="text-3xl m-3 w-100 text-center mb-8">
             Welcome Back to Seediy!
           </p>
           <div className="flex place-content-center items-center">
@@ -70,7 +70,7 @@ export default function Login() {
             />
             <button
               onClick={() => setShowPass(!showPass)}
-              className="h-[25px] w-[25px] absolute right-[15%]"
+              className="h-[25px] w-[25px] absolute right-[26.5%]"
             >
               <img
                 src={
@@ -82,13 +82,26 @@ export default function Login() {
               />
             </button>
           </div>
-          <div className="flex place-content-center mt-8">
-            <button
-              className="button w-[10vw] text-center hover:scale-[102%]"
-              onClick={handleLogin}
-            >
-              Login
-            </button>
+          <div className="flex flex-col place-content-center mt-8">
+            <div className="flex place-content-center">
+              <button
+                className="button w-[10vw] text-center hover:scale-[102%]"
+                onClick={handleLogin}
+              >
+                Login
+              </button>
+            </div>
+            <div className="flex place-content-center mt-3">
+              <p>
+                Not growing with us yet?{" "}
+                <button
+                  className="hover:text-dgreen"
+                  onClick={() => navigate("/signup")}
+                >
+                  Sign Up!
+                </button>
+              </p>
+            </div>
           </div>
         </div>
       </div>

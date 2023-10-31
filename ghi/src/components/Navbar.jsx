@@ -5,12 +5,13 @@ import seediyLogo from "../assets/seediy-logo.svg";
 import { useLogoutMutation } from "../store/apiSlice";
 import { toast } from "react-toastify";
 import { set } from "../store/tokenSlice";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function NavBar() {
   let { pathname } = useLocation();
   const navigate = useNavigate();
   const [logout] = useLogoutMutation();
+  const token = useSelector((state) => state.token.value);
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -24,18 +25,22 @@ export default function NavBar() {
     <>
       <div className="absolute right-[1%] -top-[2%] flex items-end">
         <img src={seediyLogo} alt="logo" className="w-[10vw]" />
-        <button className="pb-[5%]">
-          <img
-            src="https://img.icons8.com/sf-ultralight/50/4B5858/admin-settings-male.png"
-            alt="user settings icon"
-          />
-        </button>
-        <button className="pb-[5%]" onClick={() => handleLogout()}>
-          <img
-            src="https://img.icons8.com/sf-ultralight/50/exit.png"
-            alt="logout icon"
-          />
-        </button>
+        {token ? (
+          <>
+            <button className="pb-[5%]">
+              <img
+                src="https://img.icons8.com/sf-ultralight/50/4B5858/admin-settings-male.png"
+                alt="user settings icon"
+              />
+            </button>
+            <button className="pb-[5%]" onClick={() => handleLogout()}>
+              <img
+                src="https://img.icons8.com/sf-ultralight/50/exit.png"
+                alt="logout icon"
+              />
+            </button>
+          </>
+        ) : null}
       </div>
       <div className="absolute left-[.5%] top-[-1%] overflow-y-hidden h-[100vh]">
         <NavImage className="" props={pathname} />
