@@ -5,7 +5,7 @@ from fastapi import (
 )
 from typing import List
 from fastapi.security import OAuth2PasswordBearer
-from queries.plants import PlantQueries, PlantsIn, PlantsOut
+from queries.plants import PlantQueries, PlantsIn, PlantsOut, PlantsJoinOut
 from queries.seeds import SeedQueries
 from datetime import timedelta
 
@@ -58,7 +58,7 @@ def update_plant(
 
 
 @router.get(
-    "/api/users/{user_id}/plants", response_model=List[PlantsOut] | dict
+    "/api/users/{user_id}/plants", response_model=List[PlantsJoinOut] | dict
 )
 def plants_by_user(
     plants: PlantQueries = Depends(),
@@ -74,7 +74,7 @@ def plants_by_user(
 
 @router.get(
     "/api/users/{user_id}/plants/planted",
-    response_model=List[PlantsOut] | dict,
+    response_model=List[PlantsJoinOut] | dict,
 )
 def planted_plants_by_user(
     plants: PlantQueries = Depends(),

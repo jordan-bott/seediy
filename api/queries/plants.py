@@ -17,6 +17,10 @@ class PlantsOut(PlantsIn):
     harvest_date: date
 
 
+class PlantsJoinOut(PlantsOut):
+    nickname: str
+
+
 class PlantQueries:
     def plant_out(self, plant):
         return PlantsOut(
@@ -28,6 +32,19 @@ class PlantQueries:
             currently_planted=plant[5],
             harvest_date=plant[6],
             notes=plant[7],
+        )
+
+    def plant_join_out(self, plant):
+        return PlantsJoinOut(
+            id=plant[0],
+            user_id=plant[1],
+            seed_id=plant[2],
+            date_planted=plant[3],
+            location=plant[4],
+            currently_planted=plant[5],
+            harvest_date=plant[6],
+            notes=plant[7],
+            nickname=plant[8],
         )
 
     def create(self, info: PlantsIn, user_id: int, harvest: date):
@@ -102,16 +119,19 @@ class PlantQueries:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT *
+                        SELECT plants.*,
+                        seeds.nickname
                         FROM plants
-                        WHERE user_id = %s
+                        LEFT OUTER JOIN seeds
+                        ON plants.seed_id = seeds.id
+                        WHERE plants.user_id = %s
                         """,
                         [user_id],
                     )
                     plants = result.fetchall()
                     plant_list = []
                     for plant in plants:
-                        plant_list.append(self.plant_out(plant))
+                        plant_list.append(self.plant_join_out(plant))
                     return plant_list
         except Exception as e:
             print(e)
@@ -123,16 +143,21 @@ class PlantQueries:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT *
+                        SELECT plants.*,
+                        seeds.nickname
                         FROM plants
-                        WHERE user_id = %s and currently_planted = %s
+                        LEFT OUTER JOIN seeds
+                        ON plants.seed_id = seeds.id
+                        WHERE plants.user_id = %s AND
+                          plants.currently_planted = %s
+                        ORDER BY harvest_date
                         """,
                         [user_id, True],
                     )
                     plants = result.fetchall()
                     plant_list = []
                     for plant in plants:
-                        plant_list.append(self.plant_out(plant))
+                        plant_list.append(self.plant_join_out(plant))
                     return plant_list
         except Exception as e:
             print(e)

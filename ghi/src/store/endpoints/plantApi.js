@@ -1,4 +1,3 @@
-import { build } from "vite";
 import { apiSlice } from "../apiSlice";
 
 export const plantApiSlice = apiSlice.injectEndpoints({
@@ -38,7 +37,7 @@ export const plantApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: "Plant", id: arg.id }],
     }),
-    plantsByUser: builder.query({
+    getPlants: builder.query({
       query: ({ id, token }) => ({
         url: `/api/users/${id}/plants`,
         headers: {
@@ -82,7 +81,7 @@ export const {
   useAddPlantMutation,
   useUpdatePlantMutation,
   useDeletePlantMutation,
-  usePlantsByUserQuery,
+  useGetPlantsQuery,
   usePlantedPlantsByUserQuery,
   useUnplantMutation,
 } = plantApiSlice;
