@@ -23,12 +23,12 @@ export default function Login() {
     if (!loginResponse.error) {
       setUsername("");
       setPassword("");
+      dispatch(set(loginResponse.data.access_token));
       toast("Welcome back! 🌱");
       navigate("/dashboard");
     } else {
       toast("Incorrect username or password");
     }
-    dispatch(set(loginResponse.data.access_token));
   };
 
   const handleUsernameChange = (event) => {

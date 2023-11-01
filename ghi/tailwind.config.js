@@ -11,5 +11,5 @@ export default {
       dgrey: "#4b5858",
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")({ nocompatible: true })],
 };

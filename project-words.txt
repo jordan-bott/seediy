@@ -35,3 +35,4 @@ toastify
 Mooli
 signup
 zipcode
+nocompatible

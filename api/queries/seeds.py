@@ -172,6 +172,24 @@ class SeedQueries:
             print(e)
             return {"error": "could not update that seed"}
 
+    def get_one(self, id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT *
+                        FROM seeds
+                        WHERE id = %s
+                        """,
+                        [id],
+                    )
+                    seed = result.fetchone()
+                    return self.seed_out(seed)
+        except Exception as e:
+            print(e)
+            return {"error": "could not get seed"}
+
     def delete(self, id: int, user_id: int):
         try:
             with pool.connection() as conn:
@@ -223,7 +241,7 @@ class SeedQueries:
         except Exception:
             return {"error": "failed to update seed to planted"}
 
-    def add_to_list(self, id: int):
+    def add_to_list(self, id: int, user_id: int):
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -231,17 +249,17 @@ class SeedQueries:
                         """
                         UPDATE seeds
                         SET on_list = %s
-                        WHERE id = %s
+                        WHERE id = %s AND user_id = %s
                         RETURNING *;
                         """,
-                        [True, id],
+                        [True, id, user_id],
                     )
                     seed = result.fetchone()
                     return self.seed_out(seed)
         except Exception:
             return {"error": "failed to update seed to planted"}
 
-    def remove_from_list(self, id: int):
+    def remove_from_list(self, id: int, user_id: int):
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -249,10 +267,10 @@ class SeedQueries:
                         """
                         UPDATE seeds
                         SET on_list = %s
-                        WHERE id = %s
+                        WHERE id = %s AND user_id = %s
                         RETURNING *;
                         """,
-                        [False, id],
+                        [False, id, user_id],
                     )
                     seed = result.fetchone()
                     return self.seed_out(seed)

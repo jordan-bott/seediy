@@ -76,54 +76,42 @@ def delete_seed(
         return query
 
 
-@router.put("/api/user/{user_id}/seeds/{seed_id}/list/add")
+@router.put("/api/seeds/{seed_id}/list/add")
 def add_to_list(
-    user_id: int,
     seed_id: int,
     seeds: SeedQueries = Depends(),
     token: str = Depends(oauth2scheme),
 ):
     user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
-    if user_id == user["id"]:
-        query = seeds.add_to_list(seed_id)
-        if isinstance(query, dict):
-            raise HTTPException(status_code=400, detail="Bad Query")
-        else:
-            return query
+    query = seeds.add_to_list(seed_id, user["id"])
+    if isinstance(query, dict):
+        raise HTTPException(status_code=400, detail="Bad Query")
     else:
-        return {"error": "Not authorized to add to that shopping list"}
+        return query
 
 
-@router.put("/api/user/{user_id}/seeds/{seed_id}/list/remove")
+@router.put("/api/seeds/{seed_id}/list/remove")
 def remove_from_list(
-    user_id: int,
     seed_id: int,
     seeds: SeedQueries = Depends(),
     token: str = Depends(oauth2scheme),
 ):
     user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
-    if user_id == user["id"]:
-        query = seeds.remove_from_list(seed_id)
-        if isinstance(query, dict):
-            raise HTTPException(status_code=400, detail="Bad Query")
-        else:
-            return query
+    query = seeds.remove_from_list(seed_id, user["id"])
+    if isinstance(query, dict):
+        raise HTTPException(status_code=400, detail="Bad Query")
     else:
-        return {"error": "Not authorized to add to that shopping list"}
+        return query
 
 
-@router.get("/api/user/{user_id}/seeds/list")
+@router.get("/api/seeds/list")
 def get_shopping_list(
-    user_id: int,
     seeds: SeedQueries = Depends(),
     token: str = Depends(oauth2scheme),
 ):
     user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
-    if user_id == user["id"]:
-        query = seeds.shopping_list(user["id"])
-        if isinstance(query, dict):
-            raise HTTPException(status_code=400, detail="Bad Query")
-        else:
-            return query
+    query = seeds.shopping_list(user["id"])
+    if isinstance(query, dict):
+        raise HTTPException(status_code=400, detail="Bad Query")
     else:
-        return {"error": "Not authorized to access that shopping list"}
+        return query

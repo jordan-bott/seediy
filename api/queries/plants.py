@@ -7,7 +7,6 @@ class PlantsIn(BaseModel):
     seed_id: int
     date_planted: date
     location: str
-    harvest_date: date
     notes: str
 
 
@@ -15,6 +14,7 @@ class PlantsOut(PlantsIn):
     id: int
     user_id: int
     currently_planted: bool
+    harvest_date: date
 
 
 class PlantQueries:
@@ -30,7 +30,7 @@ class PlantQueries:
             notes=plant[7],
         )
 
-    def create(self, info: PlantsIn, user_id: int):
+    def create(self, info: PlantsIn, user_id: int, harvest: date):
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -54,7 +54,7 @@ class PlantQueries:
                             info.seed_id,
                             info.date_planted,
                             info.location,
-                            info.harvest_date,
+                            harvest,
                             info.notes,
                         ],
                     )
@@ -64,7 +64,7 @@ class PlantQueries:
             print(e)
             return {"error": "could not create that plant type"}
 
-    def update(self, info: PlantsIn, id: int):
+    def update(self, info: PlantsIn, id: int, user_id: int, harvest: date):
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -77,16 +77,17 @@ class PlantQueries:
                             location = %s,
                             harvest_date = %s,
                             notes = %s
-                        WHERE id = %s
+                        WHERE id = %s and user_id = %s
                         RETURNING *;
                         """,
                         [
                             info.seed_id,
                             info.date_planted,
                             info.location,
-                            info.harvest_date,
+                            harvest,
                             info.notes,
                             id,
+                            user_id,
                         ],
                     )
                     plant = result.fetchone()
