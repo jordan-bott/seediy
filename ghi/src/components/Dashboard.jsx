@@ -1,10 +1,9 @@
 // import { useLoginMutation, useGetUserQuery } from "../store/apiSlice";
 // import { set } from "../store/tokenSlice";
-// import { useSelector, useDispatch } from "react-redux";
+// import { useSelector } from "react-redux";
 // import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
-  //   const [loginUser] = useLoginMutation();
   //   const token = useSelector((state) => state.token.value);
   //   const { data } = useGetUserQuery(token);
   //   const dispatch = useDispatch();

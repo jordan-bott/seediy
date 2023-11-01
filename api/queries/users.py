@@ -42,6 +42,8 @@ class UserOut(BaseModel):
     verified: bool
     posts: int
     sprouts: int
+    likes: int
+    instaseeds: int
     date_created: str
     units: str
     zipcode: str
@@ -95,16 +97,18 @@ class UserQueries:
             verified=user[4],
             posts=user[5],
             sprouts=user[6],
-            date_created=str(user[7]),
-            units=user[9],
-            zipcode=user[10],
-            lon=user[11],
-            lat=user[12],
-            zone=user[13],
-            first_frost=str(user[14]),
-            last_frost=str(user[15]),
-            high_temp=user[16],
-            low_temp=user[17],
+            likes=user[7],
+            instaseeds=user[8],
+            date_created=str(user[9]),
+            units=user[11],
+            zipcode=user[12],
+            lon=user[13],
+            lat=user[14],
+            zone=user[15],
+            first_frost=str(user[16]),
+            last_frost=str(user[17]),
+            high_temp=user[18],
+            low_temp=user[19],
         )
 
     def create(self, info: UserIn) -> UserOutPass:
