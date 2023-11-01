@@ -24,6 +24,7 @@ def get_weather(
         "lon": user["lon"],
         "appid": os.environ["OPEN_WEATHER_API_KEY"],
         "units": "imperial",
+        "exclude": "minutely",
     }
     url = "https://api.openweathermap.org/data/3.0/onecall"
     response = requests.get(url, params=params)
