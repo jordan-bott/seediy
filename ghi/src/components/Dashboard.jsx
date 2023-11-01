@@ -15,12 +15,14 @@ export default function Dashboard() {
     error: userError,
   } = useGetUserQuery(token);
   const userId = userData?.id;
+
+  // harvest list
   const {
     data: plants,
     isLoading: plantLoading,
     error: plantError,
   } = usePlantedPlantsByUserQuery({ userId, token });
-  console.log(plants);
+
   // shopping list
   const [removeFromList] = useRemoveFromListMutation();
   const {
@@ -29,6 +31,10 @@ export default function Dashboard() {
     error: listError,
   } = useShoppingListQuery({ token });
 
+  const handleRemove = (id) => {
+    removeFromList({ id, token });
+  };
+
   if (listLoading || userLoading || plantLoading) {
     return <p>Loading ...</p>;
   }
@@ -36,15 +42,13 @@ export default function Dashboard() {
     toast("uh oh, error getting your shopping list");
   }
 
-  const handleRemove = (id) => {
-    removeFromList({ id, token });
-  };
-
   return (
     <div className="h-[88vh] w-[80vw] absolute right-[.5%] top-[10%]">
       <div className="absolute big-box w-[60%] h-[70%]">Weather Box</div>
       <div className="absolute big-box w-[30%] h-[38%] right-[5%] flex flex-col items-center">
-        <p className="text-3xl pt-6 w-[100%] text-center">Upcoming Harvest</p>
+        <p className="text-3xl pt-6 pb-2 w-[100%] text-center">
+          Upcoming Harvest
+        </p>
         <div className="w-[83%] my-2 overflow-y-scroll h-[70%] scrollbar-none">
           {plants.map((plant) => {
             let today = new Date();

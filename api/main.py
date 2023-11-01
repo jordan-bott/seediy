@@ -14,6 +14,7 @@ from routers import (
     blogs,
     sprouts,
     blog_comments,
+    weather,
 )
 import os
 
@@ -30,6 +31,7 @@ app.include_router(likes.router, tags=["Likes"])
 app.include_router(blogs.router, tags=["Blogs"])
 app.include_router(sprouts.router, tags=["Sprouts"])
 app.include_router(blog_comments.router, tags=["Blog Comments"])
+app.include_router(weather.router, tags=["Weather"])
 
 
 app.add_middleware(
