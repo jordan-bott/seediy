@@ -74,3 +74,56 @@ def delete_seed(
         raise HTTPException(status_code=400, detail="Bad Query")
     else:
         return query
+
+
+@router.put("/api/user/{user_id}/seeds/{seed_id}/list/add")
+def add_to_list(
+    user_id: int,
+    seed_id: int,
+    seeds: SeedQueries = Depends(),
+    token: str = Depends(oauth2scheme),
+):
+    user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
+    if user_id == user["id"]:
+        query = seeds.add_to_list(seed_id)
+        if isinstance(query, dict):
+            raise HTTPException(status_code=400, detail="Bad Query")
+        else:
+            return query
+    else:
+        return {"error": "Not authorized to add to that shopping list"}
+
+
+@router.put("/api/user/{user_id}/seeds/{seed_id}/list/remove")
+def remove_from_list(
+    user_id: int,
+    seed_id: int,
+    seeds: SeedQueries = Depends(),
+    token: str = Depends(oauth2scheme),
+):
+    user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
+    if user_id == user["id"]:
+        query = seeds.remove_from_list(seed_id)
+        if isinstance(query, dict):
+            raise HTTPException(status_code=400, detail="Bad Query")
+        else:
+            return query
+    else:
+        return {"error": "Not authorized to add to that shopping list"}
+
+
+@router.get("/api/user/{user_id}/seeds/list")
+def get_shopping_list(
+    user_id: int,
+    seeds: SeedQueries = Depends(),
+    token: str = Depends(oauth2scheme),
+):
+    user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
+    if user_id == user["id"]:
+        query = seeds.shopping_list(user["id"])
+        if isinstance(query, dict):
+            raise HTTPException(status_code=400, detail="Bad Query")
+        else:
+            return query
+    else:
+        return {"error": "Not authorized to access that shopping list"}

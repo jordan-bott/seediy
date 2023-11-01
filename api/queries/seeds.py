@@ -258,3 +258,23 @@ class SeedQueries:
                     return self.seed_out(seed)
         except Exception:
             return {"error": "failed to update seed to planted"}
+
+    def shopping_list(self, user_id: int):
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT *
+                        FROM seeds
+                        WHERE user_id = %s AND on_list = %s
+                        """,
+                        [user_id, True],
+                    )
+                    seeds = result.fetchall()
+                    seed_list = []
+                    for seed in seeds:
+                        seed_list.append(self.seed_out(seed))
+                    return seed_list
+        except Exception:
+            return {"error": "failed to get shopping list"}
