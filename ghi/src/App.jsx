@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import HomePage from "./components/HomePage";
-import Dashboard from "./components/Dashboard";
-import Login from "./components/Login";
-import Signup from "./components/SignUp";
-import AdminSignup from "./components/AdminSignUp";
+import HomePage from "./components/pages/HomePage";
+import Dashboard from "./components/pages/Dashboard";
+import Login from "./components/pages/Login";
+import Signup from "./components/pages/SignUp";
+import AdminSignup from "./components/pages/AdminSignUp";
 import NavBar from "./components/Navbar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

@@ -2,19 +2,21 @@ import { useSelector } from "react-redux";
 import {
   useShoppingListQuery,
   useRemoveFromListMutation,
-} from "../store/endpoints/seedApi";
-import { useGetUserQuery } from "../store/endpoints/userAPI";
-import { usePlantedPlantsByUserQuery } from "../store/endpoints/plantApi";
+} from "../../store/endpoints/seedApi";
+import { useGetUserQuery } from "../../store/endpoints/userAPI";
+import { usePlantedPlantsByUserQuery } from "../../store/endpoints/plantApi";
+import { useGetWeatherQuery } from "../../store/endpoints/weatherApi";
+import WeatherWidget from "../dashboard_components/WeatherWidget";
 import { toast } from "react-toastify";
 
 export default function Dashboard() {
   const token = useSelector((state) => state.token.value);
   const {
-    data: userData,
+    data: user,
     isLoading: userLoading,
     error: userError,
   } = useGetUserQuery(token);
-  const userId = userData?.id;
+  const userId = user?.id;
 
   // harvest list
   const {
@@ -35,16 +37,31 @@ export default function Dashboard() {
     removeFromList({ id, token });
   };
 
-  if (listLoading || userLoading || plantLoading) {
+  // weather
+  const {
+    data: weather,
+    isLoading: weatherLoading,
+    error: weatherError,
+  } = useGetWeatherQuery(token);
+
+  let weatherProps = {
+    weather: weather,
+    user: user,
+  };
+
+  // loading & other rendering
+  if (listLoading || userLoading || plantLoading || weatherLoading) {
     return <p>Loading ...</p>;
   }
-  if (listError || userError || plantError) {
-    toast("uh oh, error getting your shopping list");
+  if (listError || userError || plantError || weatherError) {
+    toast("uh oh, something went wrong");
   }
 
   return (
     <div className="h-[88vh] w-[80vw] absolute right-[.5%] top-[10%]">
-      <div className="absolute big-box w-[60%] h-[70%]">Weather Box</div>
+      <div className="absolute big-box w-[60%] h-[70%] flex flex-col items-center">
+        <WeatherWidget props={weatherProps} />
+      </div>
       <div className="absolute big-box w-[30%] h-[38%] right-[5%] flex flex-col items-center">
         <p className="text-3xl pt-6 pb-2 w-[100%] text-center">
           Upcoming Harvest

@@ -1,12 +1,12 @@
 import { useDispatch } from "react-redux";
-import { useLoginMutation, useSignupMutation } from "../store/apiSlice";
+import { useLoginMutation, useSignupMutation } from "../../store/apiSlice";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { set } from "../store/tokenSlice";
-import LeafyBackground from "./LeafyBackground";
+import { set } from "../../store/tokenSlice";
+import LeafyBackground from "../LeafyBackground";
 
-export default function Signup() {
+export default function AdminSignup() {
   const [loginUser] = useLoginMutation();
   const [signupUser] = useSignupMutation();
   const [username, setUsername] = useState("");

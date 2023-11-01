@@ -1,10 +1,10 @@
 import { useDispatch } from "react-redux";
-import { useLoginMutation } from "../store/apiSlice";
+import { useLoginMutation } from "../../store/apiSlice";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { set } from "../store/tokenSlice";
-import LeafyBackground from "./LeafyBackground";
+import { set } from "../../store/tokenSlice";
+import LeafyBackground from "../LeafyBackground";
 
 export default function Login() {
   const [loginUser] = useLoginMutation();
