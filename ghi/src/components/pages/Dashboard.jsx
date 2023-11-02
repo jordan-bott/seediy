@@ -12,9 +12,11 @@ import { useGetWeatherQuery } from "../../store/endpoints/weatherApi";
 import WeatherWidget from "../dashboard_components/WeatherWidget";
 import LoginError from "../error_pages/LoginError";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   const token = useSelector((state) => state.token.value);
+  const navigate = useNavigate();
 
   const {
     data: user,
@@ -78,9 +80,18 @@ export default function Dashboard() {
         <WeatherWidget props={weatherProps} />
       </div>
       <div className="absolute big-box w-[30%] h-[38%] right-[5%] flex flex-col items-center">
-        <p className="text-3xl pt-6 pb-2 w-[100%] text-center">
-          Upcoming Harvest
-        </p>
+        <div className="flex items-baseline">
+          <p className="text-3xl pt-6 pb-2 w-[100%] text-center">
+            Upcoming Harvest
+          </p>
+          <button onClick={() => navigate("/plants/create")} className="pl-2">
+            <img
+              src="https://img.icons8.com/sf-ultralight/30/4B5858/plus.png"
+              alt="sort"
+            />
+          </button>
+        </div>
+
         <div className="w-[83%] my-2 overflow-y-scroll h-[70%] scrollbar-none">
           {plants.map((plant) => {
             let today = new Date();
@@ -94,7 +105,11 @@ export default function Dashboard() {
                 className="border-b border-lgrey flex content-start items-center py-1"
               >
                 <p className="w-[56%] py-2">{plant.nickname}</p>
-                <p className={dth > 0 ? "px-2" : "bg-lgreen px-2"}>
+                <p
+                  className={
+                    dth > 0 ? "px-2 w-[28%]" : "bg-lgreen px-2 w-[28%]"
+                  }
+                >
                   {dth > 0 ? `${dth} days` : "Harvesting!"}
                 </p>
                 <button onClick={() => handleUnplant(plant.id)}>

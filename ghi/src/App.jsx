@@ -13,6 +13,7 @@ import Weather from "./components/pages/Weather";
 import PlantTypeForm from "./components/forms/PlantTypeForm";
 import LocationForm from "./components/forms/LocationForm";
 import SeedForm from "./components/forms/SeedForm";
+import AddPlanting from "./components/forms/AddPlanting";
 import LostError from "./components/error_pages/LostError";
 import NavBar from "./components/Navbar";
 import { ToastContainer } from "react-toastify";
@@ -65,8 +66,9 @@ function App() {
               <Route index element={<Blogs />} />
             </Route>
             <Route path="garden" element={<GardenLayout />} />
-            <Route path="harvest">
+            <Route path="plants">
               <Route index element={<HarvestTracker />} />
+              <Route path="create" element={<AddPlanting />} />
             </Route>
             <Route path="weather" element={<Weather />} />
             <Route path="*" element={<LostError />} />
