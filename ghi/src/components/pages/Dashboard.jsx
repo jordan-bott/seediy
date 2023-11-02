@@ -47,6 +47,7 @@ export default function Dashboard() {
   let weatherProps = {
     weather: weather,
     user: user,
+    token: token,
   };
 
   // loading & other rendering
