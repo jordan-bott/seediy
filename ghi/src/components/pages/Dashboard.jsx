@@ -4,7 +4,10 @@ import {
   useRemoveFromListMutation,
 } from "../../store/endpoints/seedApi";
 import { useGetUserQuery } from "../../store/endpoints/userAPI";
-import { usePlantedPlantsByUserQuery } from "../../store/endpoints/plantApi";
+import {
+  usePlantedPlantsByUserQuery,
+  useUnplantMutation,
+} from "../../store/endpoints/plantApi";
 import { useGetWeatherQuery } from "../../store/endpoints/weatherApi";
 import WeatherWidget from "../dashboard_components/WeatherWidget";
 import LoginError from "../error_pages/LoginError";
@@ -21,11 +24,16 @@ export default function Dashboard() {
   const userId = user?.id;
 
   // harvest list
+  const [unplant] = useUnplantMutation();
   const {
     data: plants,
     isLoading: plantLoading,
     error: plantError,
   } = usePlantedPlantsByUserQuery({ userId, token });
+
+  const handleUnplant = (id) => {
+    unplant({ id, token });
+  };
 
   // shopping list
   const [removeFromList] = useRemoveFromListMutation();
@@ -89,6 +97,13 @@ export default function Dashboard() {
                 <p className={dth > 0 ? "px-2" : "bg-lgreen px-2"}>
                   {dth > 0 ? `${dth} days` : "Harvesting!"}
                 </p>
+                <button onClick={() => handleUnplant(plant.id)}>
+                  <img
+                    src="https://img.icons8.com/sf-ultralight/30/4B5858/radish.png"
+                    alt="remove from plant list"
+                    className="px-2"
+                  />
+                </button>
               </div>
             );
           })}

@@ -109,21 +109,16 @@ def delete_seed(
 @router.put("/api/plants/{id}/unplant", response_model=PlantsOut | dict)
 def unplant(
     id: int,
-    user_id: int,
     plants: PlantQueries = Depends(),
     seeds: SeedQueries = Depends(),
     token: str = Depends(oauth2scheme),
 ):
     user = jwt.decode(token, JWT_KEY, algorithms=["HS256"])
-    if user["id"] == user_id:
-        print("in the if")
-        plant_query = plants.unplant(id)
-        if isinstance(plant_query, dict):
-            raise HTTPException(status_code=400, detail="Bad Plant Query")
-        seed_query = seeds.not_planted(plant_query.seed_id)
-        if isinstance(seed_query, dict):
-            raise HTTPException(status_code=400, detail="Bad Seed Query")
-        else:
-            return plant_query
+    plant_query = plants.unplant(id, user["id"])
+    if isinstance(plant_query, dict):
+        raise HTTPException(status_code=400, detail="Bad Plant Query")
+    seed_query = seeds.not_planted(plant_query.seed_id)
+    if isinstance(seed_query, dict):
+        raise HTTPException(status_code=400, detail="Bad Seed Query")
     else:
-        return {"error": "not authorized to update this plant"}
+        return plant_query

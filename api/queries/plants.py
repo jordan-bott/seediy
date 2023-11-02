@@ -178,7 +178,7 @@ class PlantQueries:
         except Exception:
             return {"error": "failed to delete plant"}
 
-    def unplant(self, id: int):
+    def unplant(self, id: int, user_id: int):
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -186,10 +186,10 @@ class PlantQueries:
                         """
                         UPDATE plants
                         SET currently_planted = %s
-                        WHERE id = %s
+                        WHERE id = %s AND user_id = %s
                         RETURNING *;
                         """,
-                        [False, id],
+                        [False, id, user_id],
                     )
                     plant = result.fetchone()
                     return self.plant_out(plant)

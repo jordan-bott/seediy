@@ -53,6 +53,7 @@ export default function SeedList() {
   const springUrl = "https://img.icons8.com/sf-ultralight/25/4B5858/spring.png";
   const wateringCan =
     "https://img.icons8.com/sf-ultralight/25/4B5858/watering-can.png";
+  const sproutUrl = "https://img.icons8.com/sf-ultralight/25/4B5858/sprout.png";
 
   // conditional rendering
   if (seedsLoading) {
@@ -79,6 +80,14 @@ export default function SeedList() {
           </div>
           <div className="w-[3%]">
             <button onClick={() => handleSort("frost_hardy")}>
+              <img
+                src="https://img.icons8.com/sf-ultralight/25/4B5858/sorting-arrows.png"
+                alt="sort"
+              />
+            </button>
+          </div>
+          <div className="w-[3%]">
+            <button onClick={() => handleSort("planted")}>
               <img
                 src="https://img.icons8.com/sf-ultralight/25/4B5858/sorting-arrows.png"
                 alt="sort"
@@ -148,7 +157,7 @@ export default function SeedList() {
               </button>
             </div>
           </div>
-          <div className="w-[15%] text-xl pb-2">
+          <div className="w-[12%] text-xl pb-2">
             <div className="flex">
               <p>Rating</p>
               <button onClick={() => handleSort("rating")} className="pl-2">
@@ -224,12 +233,17 @@ export default function SeedList() {
                       <img src={winterUrl} alt="snowflake" />
                     ) : null}
                   </div>
+                  <div className="w-[3%]">
+                    {seed.planted ? (
+                      <img src={sproutUrl} alt="snowflake" />
+                    ) : null}
+                  </div>
                   <div className="w-[20%]">{seed.nickname}</div>
                   <div className="w-[15%]">{seed.category_name}</div>
                   <div className="w-[15%]">
                     <p className={colorClass}>{seed.location_name}</p>
                   </div>
-                  <div className="w-[15%]">
+                  <div className="w-[12%]">
                     {seed.rating === 5 ? (
                       <div className="flex">
                         <img src={Leaf} alt="leaf" className="h-[25px]" />
