@@ -71,6 +71,7 @@ class SeedStorageQueries:
                         SELECT *
                         FROM seed_storages
                         WHERE user_id = %s
+                        ORDER BY name
                         """,
                         [user_id],
                     )

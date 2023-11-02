@@ -17,14 +17,16 @@ export default function NavBar() {
   const handleLogout = () => {
     logout();
     toast("See you again soon!");
-    navigate("/");
+    navigate("/login");
     dispatch(set(undefined));
   };
 
   return (
     <>
       <div className="absolute right-[1%] -top-[2%] flex items-end">
-        <img src={seediyLogo} alt="logo" className="w-[10vw]" />
+        <button onClick={() => navigate("/dashboard")}>
+          <img src={seediyLogo} alt="logo" className="w-[10vw]" />
+        </button>
         {token ? (
           <>
             <button className="pb-[5%]">

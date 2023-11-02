@@ -10,6 +10,8 @@ import Blogs from "./components/pages/Blogs";
 import GardenLayout from "./components/pages/GardenLayout";
 import HarvestTracker from "./components/pages/HarvestTracker";
 import Weather from "./components/pages/Weather";
+import PlantTypeForm from "./components/forms/PlantTypeForm";
+import LocationForm from "./components/forms/LocationForm";
 import LostError from "./components/error_pages/LostError";
 import NavBar from "./components/Navbar";
 import { ToastContainer } from "react-toastify";
@@ -51,6 +53,8 @@ function App() {
             </Route>
             <Route path="seeds">
               <Route index element={<SeedList />} />
+              <Route path="type" element={<PlantTypeForm />} />
+              <Route path="location" element={<LocationForm />} />
             </Route>
             <Route path="instaseed">
               <Route index element={<Instaseed />} />

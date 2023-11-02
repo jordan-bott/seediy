@@ -6,6 +6,7 @@ import {
 } from "../../store/endpoints/seedApi";
 import { toast } from "react-toastify";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Leaf from "../../assets/seediy-leaf.svg";
 
 export default function SeedList() {
@@ -23,6 +24,8 @@ export default function SeedList() {
   const handleAddToList = (id) => {
     addToList({ id, token });
   };
+
+  const navigate = useNavigate();
 
   // handle sorts
 
@@ -105,6 +108,12 @@ export default function SeedList() {
                   alt="sort"
                 />
               </button>
+              <button onClick={() => navigate("/seeds/type")} className="pl-2">
+                <img
+                  src="https://img.icons8.com/sf-ultralight/25/4B5858/plus.png"
+                  alt="sort"
+                />
+              </button>
             </div>
           </div>
           <div className="w-[15%] text-xl pb-2">
@@ -116,6 +125,15 @@ export default function SeedList() {
               >
                 <img
                   src="https://img.icons8.com/sf-ultralight/25/4B5858/sorting-arrows.png"
+                  alt="sort"
+                />
+              </button>
+              <button
+                onClick={() => navigate("/seeds/location")}
+                className="pl-2"
+              >
+                <img
+                  src="https://img.icons8.com/sf-ultralight/25/4B5858/plus.png"
                   alt="sort"
                 />
               </button>

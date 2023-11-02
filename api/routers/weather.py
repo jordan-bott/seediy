@@ -23,7 +23,7 @@ def get_weather(
         "lat": user["lat"],
         "lon": user["lon"],
         "appid": os.environ["OPEN_WEATHER_API_KEY"],
-        "units": "imperial",
+        "units": user["units"],
         "exclude": "minutely",
     }
     url = "https://api.openweathermap.org/data/3.0/onecall"

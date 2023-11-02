@@ -63,6 +63,7 @@ class PlantTypeQueries:
                         SELECT *
                         FROM plant_types
                         WHERE user_id = %s
+                        ORDER BY name
                         """,
                         [user_id],
                     )
