@@ -175,6 +175,8 @@ export default function SeedList() {
         <div className="flex flex-col pt-4 overflow-y-scroll scrollbar-thin scrollbar-thumb-rounded-lg scrollbar-thumb-lgreen divide-y divide-lgrey">
           {seedList &&
             seedList.map((seed) => {
+              const colorClass = `w-auto bg-[${seed.location_color}] mr-4 px-1 rounded-lg text-center`;
+              console.log(colorClass);
               return (
                 <div key={seed.id} className="flex flex-row py-2 items-center">
                   <div className="w-[3%]">
@@ -198,7 +200,9 @@ export default function SeedList() {
                   </div>
                   <div className="w-[20%]">{seed.nickname}</div>
                   <div className="w-[15%]">{seed.category_name}</div>
-                  <div className="w-[15%]">{seed.location_name}</div>
+                  <div className="w-[15%]">
+                    <p className={colorClass}>{seed.location_name}</p>
+                  </div>
                   <div className="w-[15%]">
                     {seed.rating === 5 ? (
                       <div className="flex">
