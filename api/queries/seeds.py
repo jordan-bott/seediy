@@ -26,6 +26,12 @@ class SeedOut(SeedIn):
     on_list: bool
 
 
+class SeedJoinOut(SeedOut):
+    location_name: str
+    location_color: str
+    category_name: str
+
+
 class SeedQueries:
     def seed_out(self, seed):
         return SeedOut(
@@ -47,6 +53,31 @@ class SeedQueries:
             seed_storage_id=seed[15],
             on_list=seed[16],
             notes=seed[17],
+        )
+
+    def seed_join_out(self, seed):
+        return SeedJoinOut(
+            id=seed[0],
+            user_id=seed[1],
+            name=seed[2],
+            nickname=seed[3],
+            quantity=seed[4],
+            days_to_harvest=seed[5],
+            frost_hardy=seed[6],
+            planted=seed[7],
+            season=seed[8],
+            water_needs=seed[9],
+            rating=seed[10],
+            brand=seed[11],
+            url=seed[12],
+            category=seed[13],
+            plant_type_id=seed[14],
+            seed_storage_id=seed[15],
+            on_list=seed[16],
+            notes=seed[17],
+            location_name=seed[18],
+            location_color=seed[19],
+            category_name=seed[20],
         )
 
     def create(self, info: SeedIn, user_id: int):
@@ -109,16 +140,23 @@ class SeedQueries:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT *
+                        SELECT seeds.*,
+                        seed_storages.name,
+                        seed_storages.color,
+                        plant_types.name
                         FROM seeds
-                        WHERE user_id = %s
+                        LEFT OUTER JOIN seed_storages
+                        ON seeds.seed_storage_id = seed_storages.id
+                        LEFT OUTER JOIN plant_types
+                        ON seeds.plant_type_id = plant_types.id
+                        WHERE seeds.user_id = %s
                         """,
                         [user_id],
                     )
                     seeds = result.fetchall()
                     seed_list = []
                     for seed in seeds:
-                        seed_list.append(self.seed_out(seed))
+                        seed_list.append(self.seed_join_out(seed))
                     return seed_list
         except Exception as e:
             print(e)

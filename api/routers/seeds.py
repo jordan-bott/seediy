@@ -6,7 +6,7 @@ from fastapi import (
 
 from typing import List
 from fastapi.security import OAuth2PasswordBearer
-from queries.seeds import SeedQueries, SeedIn, SeedOut
+from queries.seeds import SeedQueries, SeedIn, SeedOut, SeedJoinOut
 
 import jwt
 import os
@@ -30,7 +30,7 @@ def add_seed(
         return query
 
 
-@router.get("/api/seeds", response_model=List[SeedOut] | dict)
+@router.get("/api/seeds", response_model=List[SeedJoinOut] | dict)
 def seeds_by_user(
     seeds: SeedQueries = Depends(),
     token: str = Depends(oauth2scheme),
