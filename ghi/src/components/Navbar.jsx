@@ -43,7 +43,7 @@ export default function NavBar() {
         ) : null}
       </div>
       {token ? (
-        <div className="absolute left-[.5%] top-[-1%] overflow-y-hidden h-[100vh]">
+        <div className="absolute left-[.5%] top-[-1%] overflow-y-hidden h-[100vh] z-50">
           <NavImage className="" props={pathname} />
           <button
             onClick={() => navigate("/dashboard")}

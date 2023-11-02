@@ -125,12 +125,8 @@ export default function Dashboard() {
           ))}
         </div>
       </div>
-      <div className="absolute big-box w-[20vw] h-[19vh] bottom-[3%]">
-        Water Box
-      </div>
-      <div className="absolute big-box w-[25vw] h-[19vh] bottom-[3%] right-[40%]">
-        Water Box
-      </div>
+      <div className="absolute big-box w-[20vw] h-[19vh] bottom-[3%]"></div>
+      <div className="absolute big-box w-[25vw] h-[19vh] bottom-[3%] right-[40%]"></div>
     </div>
   );
 }

@@ -66,9 +66,23 @@ export default function SeedList() {
     <div className="h-[85vh] w-[78vw] absolute right-[2%] top-[10%] big-box flex items-start justify-center">
       <div className="flex flex-col m-4 w-[90%] h-[95%] divide-y-2 divide-dgrey">
         <div className="w-[100%] flex flex-row justify-between">
-          <div className="w-[3%]"></div>
-          <div className="w-[3%]"></div>
-          <div className="w-[23%] text-xl pb-2">
+          <div className="w-[3%]">
+            <button onClick={() => handleSort("season")}>
+              <img
+                src="https://img.icons8.com/sf-ultralight/25/4B5858/sorting-arrows.png"
+                alt="sort"
+              />
+            </button>
+          </div>
+          <div className="w-[3%]">
+            <button onClick={() => handleSort("frost_hardy")}>
+              <img
+                src="https://img.icons8.com/sf-ultralight/25/4B5858/sorting-arrows.png"
+                alt="sort"
+              />
+            </button>
+          </div>
+          <div className="w-[20%] text-xl pb-2">
             <div className="flex">
               <p>Seed Name</p>
               <button onClick={() => handleSort("nickname")} className="pl-2">
@@ -84,6 +98,20 @@ export default function SeedList() {
               <p>Category</p>
               <button
                 onClick={() => handleSort("plant_type_id")}
+                className="pl-2"
+              >
+                <img
+                  src="https://img.icons8.com/sf-ultralight/25/4B5858/sorting-arrows.png"
+                  alt="sort"
+                />
+              </button>
+            </div>
+          </div>
+          <div className="w-[15%] text-xl pb-2">
+            <div className="flex">
+              <p>Location</p>
+              <button
+                onClick={() => handleSort("location_name")}
                 className="pl-2"
               >
                 <img
@@ -118,23 +146,31 @@ export default function SeedList() {
               </button>
             </div>
           </div>
-          <div className="w-[15%] text-xl pb-2">
+          <div className="w-[8%] text-xl pb-2">
             <div className="flex">
-              <p>Days To Harvest</p>
+              <p>Days</p>
               <button
                 onClick={() => handleSort("days_to_harvest")}
-                className="pl-2"
+                className=""
               >
                 <img
                   src="https://img.icons8.com/sf-ultralight/25/4B5858/sorting-arrows.png"
                   alt="sort"
+                  className="w-[25px]"
                 />
               </button>
             </div>
           </div>
           <div className="w-[3.5%]"></div>
           <div className="w-[3.5%]"></div>
-          <div className="w-[3.5%]"></div>
+          <div className="w-[3.5%]">
+            <button onClick={() => handleSort("on_list")} className="pl-2">
+              <img
+                src="https://img.icons8.com/sf-ultralight/25/4B5858/sorting-arrows.png"
+                alt="sort"
+              />
+            </button>
+          </div>
         </div>
         <div className="flex flex-col pt-4 overflow-y-scroll scrollbar-thin scrollbar-thumb-rounded-lg scrollbar-thumb-lgreen divide-y divide-lgrey">
           {seedList &&
@@ -160,8 +196,9 @@ export default function SeedList() {
                       <img src={winterUrl} alt="snowflake" />
                     ) : null}
                   </div>
-                  <div className="w-[23%]">{seed.nickname}</div>
-                  <div className="w-[15%]">{seed.plant_type_id}</div>
+                  <div className="w-[20%]">{seed.nickname}</div>
+                  <div className="w-[15%]">{seed.category_name}</div>
+                  <div className="w-[15%]">{seed.location_name}</div>
                   <div className="w-[15%]">
                     {seed.rating === 5 ? (
                       <div className="flex">
@@ -228,9 +265,7 @@ export default function SeedList() {
                       </div>
                     )}
                   </div>
-                  <div className="w-[15%] text-center">
-                    {seed.days_to_harvest}
-                  </div>
+                  <div className="w-[8%] pl-1">{seed.days_to_harvest}</div>
                   <div className="w-[3.5%] h-[30px]">
                     <img
                       src="https://img.icons8.com/sf-ultralight/30/4B5858/overview-pages-1.png"

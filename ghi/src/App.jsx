@@ -5,6 +5,12 @@ import Login from "./components/pages/Login";
 import Signup from "./components/pages/SignUp";
 import AdminSignup from "./components/pages/AdminSignUp";
 import SeedList from "./components/pages/SeedList";
+import Instaseed from "./components/pages/Instaseed";
+import Blogs from "./components/pages/Blogs";
+import GardenLayout from "./components/pages/GardenLayout";
+import HarvestTracker from "./components/pages/HarvestTracker";
+import Weather from "./components/pages/Weather";
+import LostError from "./components/error_pages/LostError";
 import NavBar from "./components/Navbar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -46,6 +52,18 @@ function App() {
             <Route path="seeds">
               <Route index element={<SeedList />} />
             </Route>
+            <Route path="instaseed">
+              <Route index element={<Instaseed />} />
+            </Route>
+            <Route path="blogs">
+              <Route index element={<Blogs />} />
+            </Route>
+            <Route path="garden" element={<GardenLayout />} />
+            <Route path="harvest">
+              <Route index element={<HarvestTracker />} />
+            </Route>
+            <Route path="weather" element={<Weather />} />
+            <Route path="*" element={<LostError />} />
           </Routes>
         </div>
       </BrowserRouter>
