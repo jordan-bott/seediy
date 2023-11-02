@@ -150,6 +150,7 @@ class SeedQueries:
                         LEFT OUTER JOIN plant_types
                         ON seeds.plant_type_id = plant_types.id
                         WHERE seeds.user_id = %s
+                        ORDER BY seeds.id
                         """,
                         [user_id],
                     )

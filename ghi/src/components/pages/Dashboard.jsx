@@ -85,7 +85,7 @@ export default function Dashboard() {
                 key={plant.id}
                 className="border-b border-lgrey flex content-start items-center py-1"
               >
-                <p className="w-[56%] py-2">{plant.location}</p>
+                <p className="w-[56%] py-2">{plant.nickname}</p>
                 <p className={dth > 0 ? "px-2" : "bg-lgreen px-2"}>
                   {dth > 0 ? `${dth} days` : "Harvesting!"}
                 </p>

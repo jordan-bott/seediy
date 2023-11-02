@@ -12,6 +12,7 @@ import HarvestTracker from "./components/pages/HarvestTracker";
 import Weather from "./components/pages/Weather";
 import PlantTypeForm from "./components/forms/PlantTypeForm";
 import LocationForm from "./components/forms/LocationForm";
+import SeedForm from "./components/forms/SeedForm";
 import LostError from "./components/error_pages/LostError";
 import NavBar from "./components/Navbar";
 import { ToastContainer } from "react-toastify";
@@ -53,6 +54,7 @@ function App() {
             </Route>
             <Route path="seeds">
               <Route index element={<SeedList />} />
+              <Route path="create" element={<SeedForm />} />
               <Route path="type" element={<PlantTypeForm />} />
               <Route path="location" element={<LocationForm />} />
             </Route>

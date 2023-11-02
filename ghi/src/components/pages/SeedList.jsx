@@ -94,13 +94,22 @@ export default function SeedList() {
                   alt="sort"
                 />
               </button>
+              <button
+                onClick={() => navigate("/seeds/create")}
+                className="pl-2"
+              >
+                <img
+                  src="https://img.icons8.com/sf-ultralight/25/4B5858/plus.png"
+                  alt="sort"
+                />
+              </button>
             </div>
           </div>
           <div className="w-[15%] text-xl pb-2">
             <div className="flex">
               <p>Category</p>
               <button
-                onClick={() => handleSort("plant_type_id")}
+                onClick={() => handleSort("category_name")}
                 className="pl-2"
               >
                 <img
@@ -193,8 +202,7 @@ export default function SeedList() {
         <div className="flex flex-col pt-4 overflow-y-scroll scrollbar-thin scrollbar-thumb-rounded-lg scrollbar-thumb-lgreen divide-y divide-lgrey">
           {seedList &&
             seedList.map((seed) => {
-              const colorClass = `w-auto bg-[${seed.location_color}] mr-4 px-1 rounded-lg text-center`;
-              console.log(colorClass);
+              let colorClass = `w-auto bg-[${seed?.location_color}] mr-4 px-1 rounded-lg text-center`;
               return (
                 <div key={seed.id} className="flex flex-row py-2 items-center">
                   <div className="w-[3%]">
