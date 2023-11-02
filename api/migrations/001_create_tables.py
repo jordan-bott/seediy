@@ -13,7 +13,7 @@ steps = [
             instaseeds INTEGER NOT NULL DEFAULT 0,
             date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
             password_hash VARCHAR(2000) NOT NULL,
-            units VARCHAR(100) NOT NULL DEFAULT 'english',
+            units VARCHAR(100) NOT NULL DEFAULT 'imperial',
             zipcode VARCHAR(100) NOT NULL,
             lon VARCHAR(100) NOT NULL,
             lat VARCHAR(100) NOT NULL,
