@@ -7,10 +7,12 @@ import { useGetUserQuery } from "../../store/endpoints/userAPI";
 import { usePlantedPlantsByUserQuery } from "../../store/endpoints/plantApi";
 import { useGetWeatherQuery } from "../../store/endpoints/weatherApi";
 import WeatherWidget from "../dashboard_components/WeatherWidget";
+import LoginError from "../error_pages/LoginError";
 import { toast } from "react-toastify";
 
 export default function Dashboard() {
   const token = useSelector((state) => state.token.value);
+
   const {
     data: user,
     isLoading: userLoading,
@@ -56,6 +58,10 @@ export default function Dashboard() {
   }
   if (listError || userError || plantError || weatherError) {
     toast("uh oh, something went wrong");
+  }
+
+  if (token === undefined) {
+    return <LoginError />;
   }
 
   return (

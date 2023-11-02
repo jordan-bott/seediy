@@ -4,6 +4,7 @@ import Dashboard from "./components/pages/Dashboard";
 import Login from "./components/pages/Login";
 import Signup from "./components/pages/SignUp";
 import AdminSignup from "./components/pages/AdminSignUp";
+import SeedList from "./components/pages/SeedList";
 import NavBar from "./components/Navbar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -41,6 +42,9 @@ function App() {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="admin">
               <Route path="signup" element={<AdminSignup />} />
+            </Route>
+            <Route path="seeds">
+              <Route index element={<SeedList />} />
             </Route>
           </Routes>
         </div>

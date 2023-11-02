@@ -30,7 +30,7 @@ def add_seed(
         return query
 
 
-@router.get("/api/user/{user_id}/seeds", response_model=List[SeedOut] | dict)
+@router.get("/api/seeds", response_model=List[SeedOut] | dict)
 def seeds_by_user(
     seeds: SeedQueries = Depends(),
     token: str = Depends(oauth2scheme),
