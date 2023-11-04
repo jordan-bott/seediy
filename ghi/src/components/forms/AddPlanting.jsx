@@ -19,7 +19,7 @@ export default function AddPlanting() {
     data: seeds,
     isLoading: seedLoading,
     isError: seedError,
-  } = useSeedsByUserQuery(token);
+  } = useSeedsByUserQuery();
 
   const [seedDropdown, setSeedDropdown] = useState(false);
 
@@ -80,20 +80,20 @@ export default function AddPlanting() {
           <div className="flex place-content-center items-center my-2">
             <p>Seed: </p>
             <button onClick={() => setSeedDropdown(!seedDropdown)}>
-              <div className="flex flex-col divide-y-2 px-2 box w-[250px] max-h-[190px] overflow-scroll scrollbar-thin scrollbar-thumb-orange scrollbar-thumb-rounded-lg">
-                <div className="flex justify-between pt-1 px-2 mt-2 mb-0">
-                  <p className="text-lg">{seed}</p>
+              <div className="flex flex-col divide-y-2 px-2 ml-2 box w-[250px] max-h-[190px] overflow-scroll scrollbar-thin scrollbar-thumb-orange scrollbar-thumb-rounded-lg">
+                <div className="flex justify-between px-2 items-start h-5 mt-1">
+                  <p className="text-m">{seed}</p>
                   <img
                     src="https://img.icons8.com/sf-ultralight/25/4B5858/down-squared.png"
                     alt="drop down arrow"
                   />
                 </div>
-                {seedDropdown
+                {seeds && seedDropdown
                   ? seeds.map((s) => {
                       return (
                         <button key={s.id} onClick={() => setSeed(s.id)}>
-                          <div className="flex p-2 bg-yellow w-100">
-                            <p className="hover:text-orange mt-1 pr-3">
+                          <div className="flex p-2 w-100">
+                            <p className="hover:text-lgreen mt-1 pr-3">
                               {s.nickname}
                             </p>
                           </div>
