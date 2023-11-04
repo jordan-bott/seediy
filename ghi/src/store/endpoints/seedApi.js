@@ -15,12 +15,8 @@ export const seedApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: (result, error, arg) => [{ type: "Seeds", id: arg.id }],
     }),
     seedsByUser: builder.query({
-      query: (token) => ({
+      query: () => ({
         url: `/api/seeds`,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
       }),
       providesTags: (result = [], error, arg) => [
         "Seeds",

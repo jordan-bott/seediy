@@ -4,19 +4,19 @@ export const apiSlice = createApi({
   tagTypes: ["Token"],
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8000",
-    credentials: "include",
+    prepareHeaders: (headers, { getState }) => {
+      const token = getState().token.value;
+
+      console.log("token", token);
+
+      if (token) {
+        headers.set("authorization", `Bearer ${token}`);
+      }
+
+      return headers;
+    },
   }),
-  prepareHeaders: (headers, { getState }) => {
-    const token = getState().token;
 
-    console.log("token", token);
-
-    if (token) {
-      headers.set("authorization", `Bearer ${token}`);
-    }
-
-    return headers;
-  },
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: (info) => {

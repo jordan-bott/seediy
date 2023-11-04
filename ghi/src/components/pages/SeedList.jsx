@@ -16,7 +16,7 @@ export default function SeedList() {
     data: seeds,
     isLoading: seedsLoading,
     isError: seedsError,
-  } = useSeedsByUserQuery(token);
+  } = useSeedsByUserQuery();
   const [addToList] = useAddToListMutation();
 
   // handle data

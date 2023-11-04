@@ -23,6 +23,7 @@ export default function Login() {
     if (!loginResponse.error) {
       setUsername("");
       setPassword("");
+      document.cookie = loginResponse.data.access_token;
       dispatch(set(loginResponse.data.access_token));
       toast("Welcome back! 🌱");
       navigate("/dashboard");

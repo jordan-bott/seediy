@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const tokenSlice = createSlice({
-  name: "token",
+  name: "tokenToken",
   initialState: {
-    value: document.cookie.seediy_token,
+    value: document.cookie,
   },
   reducers: {
     set: (state, action) => {
