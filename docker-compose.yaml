@@ -35,22 +35,6 @@ services:
       REACT_APP_SAMPLE_SERVICE_API_HOST: http://localhost:8000
       WATCHPACK_POLLING: true
 
-  ts-ghi:
-    image: node:lts-bullseye
-    command: /bin/bash run.sh
-    working_dir: /app
-    volumes:
-      - ./ts-ghi:/app
-    ports:
-      - "3001:3001"
-    environment:
-      HOST_OS: ${OS}
-      NODE_ENV: development
-      HOST: "0.0.0.0"
-      PUBLIC_URL: http://localhost:3001
-      REACT_APP_SAMPLE_SERVICE_API_HOST: http://localhost:8000
-      WATCHPACK_POLLING: true
-
   postgres:
     build:
       context: ./relational-data
