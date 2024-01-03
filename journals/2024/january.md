@@ -39,7 +39,7 @@ Had to run `git config --global user.email` and change to my dev email instead
 - Displaying the name of the foreign key in the dropdown rather than the id
 
 **AH-HA!💡**
-I don't have to use "event" to change things, and I can pass in a parameter instead!
+I don't have to use "event" to update states from forms, and I can pass in a parameter instead!
 
 **🎉 Celebrations 🎉**
 
