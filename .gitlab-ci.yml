@@ -24,18 +24,19 @@ lint-test-job:
 #     - pip install -r requirements.txt
 #     - python -m pytest
 
-# # Build API Image:
+# Build API Image:
 # build-api-image:
-#   stage: build
-#   image: docker:git
+#   image: docker:latest
 #   variables:
-#     GITLAB_IMAGE: ${CI_REGISTRY_IMAGE}/api
-#   before_script:
-#     # $CI_JOB_TOKEN is variable automatically added by Gitlab: see https://docs.gitlab.com/ee/ci/variables/predefined_variables.html#variables-reference
-#     - echo $CI_JOB_TOKEN | docker login -u gitlab-ci-token registry.gitlab.com --password-stdin
+#     DOCKER_DRIVER: overlay
+#   stage: build
 #   script:
-#     - docker build --tag $GITLAB_IMAGE:latest ./api
-#     - docker push $GITLAB_IMAGE:latest
+#     - docker build -f Dockerfile --iidfile imageid.txt -t registry.heroku.com/seediy-api/my-app .
+#     - docker login -u _ -p $HEROKU_TOKEN registry.heroku.com
+#     - docker push registry.heroku.com/seediy-api/my-app
+#     - apk add --no-cache curl
+#     - |-
+#       curl -X PATCH https://api.heroku.com/apps/seediy-api/formation --header "Content-Type: application/json" --header "Accept: application/vnd.heroku+json; version=3.docker-releases" --header "Authorization: Bearer ${HEROKU_TOKEN}" --data '{ "updates": [ { "type": "web", "docker_image": "'$(cat imageid.txt)'" } ] }'
 #   only:
 #     - main
 
@@ -45,33 +46,43 @@ lint-test-job:
 #   image: node:lts-bullseye
 #   needs:
 #     - lint-test-job
-#   variables:
-#     # If either of these variables is defined in the GitLab
-#     # CI/CD variables, that value will override the value here.
-#     # You need to substitute in your real values for
-#     # GROUP_NAME, PROJECT_NAME, & WEBSERVICE_NAME below.
-#     PUBLIC_URL: https://GROUP_NAME.gitlab.io/PROJECT_NAME/
-#     REACT_APP_API_HOST: https://DEPLOYED_API_SERVICE.mod3projects.com
 #   script:
 #     - cd ghi
 #     - npm install
 #     - npm run build
-#     - cp build/index.html build/404.html
+#     - cp -a dist/. public/
 #   artifacts:
 #     paths:
-#       - ghi/build/
+#       - ghi/public/
+#   only:
+#     - main
 
-# # Deploy the React/JavaScript front-end to GitLab pages
-# pages:
+# deploy-to-s3:
 #   stage: deploy
-#   rules:
-#     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+#   image:
+#     name: amazon/aws-cli:latest
+#     entrypoint: [""]
 #   dependencies:
 #     - build-front-end-job
 #   needs:
 #     - build-front-end-job
 #   script:
-#     - mv ghi/build/ public
-#   artifacts:
-#     paths:
-#       - public
+#     - aws --version
+#     - aws s3 sync ghi/public/ s3://${AWS_S3_BUCKET} --delete
+#   only:
+#     - main
+
+# deploy-to-heroku:
+#   image: ruby:2.7
+#   stage: deploy
+#   before_script:
+#     - gem install dpl
+#     - wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
+#   script:
+#     - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_PRODUCTION_KEY
+#     - heroku run --app $HEROKU_APP_NAME migrate
+#   environment:
+#     name: production
+#     url: https://$HEROKU_APP_NAME.herokuapp.com
+#   only:
+#     - main

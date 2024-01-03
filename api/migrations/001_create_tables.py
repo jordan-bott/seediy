@@ -9,9 +9,11 @@ steps = [
             verified BOOLEAN DEFAULT FALSE,
             posts INTEGER NOT NULL DEFAULT 0,
             sprouts INTEGER NOT NULL DEFAULT 0,
+            likes INTEGER NOT NULL DEFAULT 0,
+            instaseeds INTEGER NOT NULL DEFAULT 0,
             date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
             password_hash VARCHAR(2000) NOT NULL,
-            units VARCHAR(100) NOT NULL DEFAULT 'english',
+            units VARCHAR(100) NOT NULL DEFAULT 'imperial',
             zipcode VARCHAR(100) NOT NULL,
             lon VARCHAR(100) NOT NULL,
             lat VARCHAR(100) NOT NULL,
@@ -142,7 +144,8 @@ steps = [
             id SERIAL PRIMARY KEY NOT NULL,
             user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
             author_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-            post_id INTEGER REFERENCES instaseeds(id) ON DELETE CASCADE
+            post_id INTEGER REFERENCES instaseeds(id) ON DELETE CASCADE,
+            UNIQUE (user_id, post_id)
         );
         """,
         """
