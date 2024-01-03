@@ -42,6 +42,7 @@ export default function SeedForm() {
   const [url, setUrl] = useState("");
   const [category, setCategory] = useState("");
   const [plantType, setPlantType] = useState("");
+  const [plantTypeName, setPlantTypeName] = useState("");
   const [storage, setStorage] = useState("");
   const [notes, setNotes] = useState("");
 
@@ -156,6 +157,11 @@ export default function SeedForm() {
     setNotes(value);
   };
 
+  const handlePlantTypeChange = (type) => {
+    setPlantType(type.id);
+    setPlantTypeName(type.name);
+  };
+
   // conditional rendering
 
   if (userLoading || plantTypeLoading || seedStorageLoading) {
@@ -227,9 +233,9 @@ export default function SeedForm() {
               <div className="flex place-content-center items-center my-2">
                 <p>Season: </p>
                 <button onClick={() => setSeasonDropdown(!seasonDropdown)}>
-                  <div className="flex flex-col divide-y-2 px-2 box w-[250px] max-h-[190px] overflow-scroll scrollbar-thin scrollbar-thumb-orange scrollbar-thumb-rounded-lg">
-                    <div className="flex justify-between pt-1 px-2 mt-2 mb-0">
-                      <p className="text-lg">{season}</p>
+                  <div className="flex flex-col divide-y-2 px-2 ml-2 box w-[250px] max-h-[190px] overflow-scroll scrollbar-thin scrollbar-thumb-orange scrollbar-thumb-rounded-lg">
+                    <div className="flex justify-between px-2 items-start h-5 mt-1">
+                      <p className="text-m">{season}</p>
                       <img
                         src="https://img.icons8.com/sf-ultralight/25/4B5858/down-squared.png"
                         alt="drop down arrow"
@@ -239,8 +245,8 @@ export default function SeedForm() {
                       ? seasonArray.map((s) => {
                           return (
                             <button key={s} onClick={() => setSeason(s)}>
-                              <div className="flex p-2 bg-yellow w-100">
-                                <p className="hover:text-orange mt-1 pr-3">
+                              <div className="flex p-2 w-100">
+                                <p className="hover:text-lgreen mt-1 pr-3">
                                   {s}
                                 </p>
                               </div>
@@ -254,9 +260,9 @@ export default function SeedForm() {
               <div className="flex place-content-center items-center my-2">
                 <p>Category: </p>
                 <button onClick={() => setCategoryDropdown(!categoryDropdown)}>
-                  <div className="flex flex-col divide-y-2 px-2 box w-[250px] max-h-[190px] overflow-scroll scrollbar-thin scrollbar-thumb-orange scrollbar-thumb-rounded-lg">
-                    <div className="flex justify-between pt-1 px-2 mt-2 mb-0">
-                      <p className="text-lg">{category}</p>
+                  <div className="flex flex-col divide-y-2 px-2 ml-2 box w-[250px] max-h-[190px] overflow-scroll scrollbar-thin scrollbar-thumb-orange scrollbar-thumb-rounded-lg">
+                    <div className="flex justify-between px-2 items-start h-5 mt-1">
+                      <p className="text-m">{category}</p>
                       <img
                         src="https://img.icons8.com/sf-ultralight/25/4B5858/down-squared.png"
                         alt="drop down arrow"
@@ -266,8 +272,8 @@ export default function SeedForm() {
                       ? categoryArray.map((c) => {
                           return (
                             <button key={c} onClick={() => setCategory(c)}>
-                              <div className="flex p-2 bg-yellow w-100">
-                                <p className="hover:text-orange mt-1 pr-3">
+                              <div className="flex p-2 w-100">
+                                <p className="hover:text-lgreen mt-1 pr-3">
                                   {c}
                                 </p>
                               </div>
@@ -285,9 +291,13 @@ export default function SeedForm() {
                 <button
                   onClick={() => setPlantTypeDropdown(!plantTypeDropdown)}
                 >
-                  <div className="flex flex-col divide-y px-2 box overflow-scroll scrollbar-thin scrollbar-thumb-orange scrollbar-thumb-rounded-lg">
-                    <div className="flex justify-between pt-1 px-2 mt-2 mb-0">
-                      <p className="text-lg">{plantType}</p>
+                  <div className="flex flex-col divide-y-2 px-2 ml-2 box w-[250px] max-h-[190px] overflow-scroll scrollbar-thin scrollbar-thumb-orange scrollbar-thumb-rounded-lg">
+                    <div className="flex justify-between px-2 items-start h-5 mt-1">
+                      <p className="text-m">
+                        {plantTypeName != ""
+                          ? plantTypeName
+                          : "Select a plant Type"}
+                      </p>
                       <img
                         src="https://img.icons8.com/sf-ultralight/25/4B5858/down-squared.png"
                         alt="drop down arrow"
@@ -299,10 +309,10 @@ export default function SeedForm() {
                           return (
                             <button
                               key={c.id}
-                              onClick={() => setPlantType(c.id)}
+                              onClick={() => handlePlantTypeChange(c)}
                             >
-                              <div className="flex p-2 bg-yellow w-100">
-                                <p className="hover:text-orange mt-1 pr-3">
+                              <div className="flex p-2 w-100">
+                                <p className="hover:text-lgreen mt-1 pr-3">
                                   {c.name}
                                 </p>
                               </div>
@@ -319,9 +329,9 @@ export default function SeedForm() {
                 <button
                   onClick={() => setSeedStorageDropdown(!seedStorageDropdown)}
                 >
-                  <div className="flex flex-col divide-y px-2 box overflow-scroll scrollbar-thin scrollbar-thumb-orange scrollbar-thumb-rounded-lg">
-                    <div className="flex justify-between pt-1 px-2 mt-2 mb-0">
-                      <p className="text-lg">{storage}</p>
+                  <div className="flex flex-col divide-y-2 px-2 ml-2 box w-[250px] max-h-[190px] overflow-scroll scrollbar-thin scrollbar-thumb-orange scrollbar-thumb-rounded-lg">
+                    <div className="flex justify-between px-2 items-start h-5 mt-1">
+                      <p className="text-m">{storage}</p>
                       <img
                         src="https://img.icons8.com/sf-ultralight/25/4B5858/down-squared.png"
                         alt="drop down arrow"
@@ -332,8 +342,8 @@ export default function SeedForm() {
                         seedStorages.map((s) => {
                           return (
                             <button key={s.id} onClick={() => setStorage(s.id)}>
-                              <div className="flex p-2 bg-yellow w-100">
-                                <p className="hover:text-orange mt-1 pr-3">
+                              <div className="flex p-2 w-100">
+                                <p className="hover:text-lgreen mt-1 pr-3">
                                   {s.name}
                                 </p>
                               </div>
