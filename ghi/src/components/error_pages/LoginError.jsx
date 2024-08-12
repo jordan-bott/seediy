@@ -6,12 +6,12 @@ export default function LoginError() {
   const navigate = useNavigate();
   return (
     <>
-      <div className="flex flex-col place-content-center items-center h-[100vh] w-[100vw]">
+      <div className="flex h-[100vh] w-[100vw] flex-col place-content-center items-center">
         <LeafyBackground />
-        <p className="text-5xl z-40 pb-8">
+        <p className="z-40 pb-8 text-5xl">
           Uh oh! Looks like you are not logged in.
         </p>
-        <div className="flex place-content-around w-[40%]">
+        <div className="flex w-[40%] place-content-around">
           <div>
             <img
               src={Leaf}
@@ -19,7 +19,7 @@ export default function LoginError() {
               className="relative h-40 rotate-[45deg]"
             />
             <button
-              className="inline absolute text-3xl left-[58%] top-[52%] z-10"
+              className="absolute left-[58%] top-[52%] z-10 inline text-3xl"
               onClick={() => navigate("/login")}
             >
               Login
@@ -32,7 +32,7 @@ export default function LoginError() {
               className="relative h-40 rotate-[45deg]"
             />
             <button
-              className="inline absolute text-3xl left-[37.5%] top-[52%] z-10"
+              className="absolute left-[37.5%] top-[52%] z-10 inline text-3xl"
               onClick={() => navigate("/signup")}
             >
               Signup

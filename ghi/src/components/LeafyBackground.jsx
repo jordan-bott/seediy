@@ -6,7 +6,7 @@ export default function LeafyBackground() {
       <img
         src={Leaf}
         alt="green leaf"
-        className="absolute left-[25%] top-[18%] lg:h-40 md:h-20 sm:h-10"
+        className="absolute left-[25%] top-[18%] sm:h-10 md:h-20 lg:h-40"
       />
       <img
         src={Leaf}

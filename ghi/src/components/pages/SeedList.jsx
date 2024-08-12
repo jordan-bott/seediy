@@ -68,9 +68,9 @@ export default function SeedList() {
   }
 
   return (
-    <div className="h-[85vh] w-[78vw] absolute right-[2%] top-[10%] big-box flex items-start justify-center">
-      <div className="flex flex-col m-4 w-[90%] h-[95%] divide-y-2 divide-dgrey">
-        <div className="w-[100%] flex flex-row justify-between">
+    <div className="big-box absolute right-[2%] top-[10%] flex h-[85vh] w-[78vw] items-start justify-center">
+      <div className="m-4 flex h-[95%] w-[90%] flex-col divide-y-2 divide-dgrey">
+        <div className="flex w-[100%] flex-row justify-between">
           <div className="w-[3%]">
             <button onClick={() => handleSort("season")}>
               <img
@@ -95,7 +95,7 @@ export default function SeedList() {
               />
             </button>
           </div>
-          <div className="w-[20%] text-xl pb-2">
+          <div className="w-[20%] pb-2 text-xl">
             <div className="flex">
               <p>Seed Name</p>
               <button onClick={() => handleSort("nickname")} className="pl-2">
@@ -115,7 +115,7 @@ export default function SeedList() {
               </button>
             </div>
           </div>
-          <div className="w-[15%] text-xl pb-2">
+          <div className="w-[15%] pb-2 text-xl">
             <div className="flex">
               <p>Category</p>
               <button
@@ -135,7 +135,7 @@ export default function SeedList() {
               </button>
             </div>
           </div>
-          <div className="w-[15%] text-xl pb-2">
+          <div className="w-[15%] pb-2 text-xl">
             <div className="flex">
               <p>Location</p>
               <button
@@ -158,7 +158,7 @@ export default function SeedList() {
               </button>
             </div>
           </div>
-          <div className="w-[12%] text-xl pb-2">
+          <div className="w-[12%] pb-2 text-xl">
             <div className="flex">
               <p>Rating</p>
               <button onClick={() => handleSort("rating")} className="pl-2">
@@ -169,7 +169,7 @@ export default function SeedList() {
               </button>
             </div>
           </div>
-          <div className="w-[18%] text-xl pb-2">
+          <div className="w-[18%] pb-2 text-xl">
             <div className="flex">
               <p>Watering Needs</p>
               <button
@@ -183,7 +183,7 @@ export default function SeedList() {
               </button>
             </div>
           </div>
-          <div className="w-[8%] text-xl pb-2">
+          <div className="w-[8%] pb-2 text-xl">
             <div className="flex">
               <p>Days</p>
               <button
@@ -209,12 +209,12 @@ export default function SeedList() {
             </button>
           </div>
         </div>
-        <div className="flex flex-col pt-4 overflow-y-scroll scrollbar-thin scrollbar-thumb-rounded-lg scrollbar-thumb-lgreen divide-y divide-lgrey">
+        <div className="flex flex-col divide-y divide-lgrey overflow-y-scroll pt-4 scrollbar-thin scrollbar-thumb-lgreen scrollbar-thumb-rounded-lg">
           {seedList &&
             seedList.map((seed) => {
               let colorClass = `w-auto bg-[${seed?.location_color}] mr-4 px-1 rounded-lg text-center`;
               return (
-                <div key={seed.id} className="flex flex-row py-2 items-center">
+                <div key={seed.id} className="flex flex-row items-center py-2">
                   <div className="w-[3%]">
                     <img
                       src={
@@ -311,19 +311,19 @@ export default function SeedList() {
                     )}
                   </div>
                   <div className="w-[8%] pl-1">{seed.days_to_harvest}</div>
-                  <div className="w-[3.5%] h-[30px]">
+                  <div className="h-[30px] w-[3.5%]">
                     <img
                       src="https://img.icons8.com/sf-ultralight/30/4B5858/overview-pages-1.png"
                       alt="notes"
                     />
                   </div>
-                  <div className="w-[3.5%] h-[30px]">
+                  <div className="h-[30px] w-[3.5%]">
                     <img
                       src="https://img.icons8.com/sf-ultralight/30/4B5858/pencil.png"
                       alt="edit"
                     />
                   </div>
-                  <div className="w-[3%] h-[30px]">
+                  <div className="h-[30px] w-[3%]">
                     {seed.on_list ? null : (
                       <button onClick={() => handleAddToList(seed.id)}>
                         <img

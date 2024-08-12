@@ -51,10 +51,10 @@ export default function LocationForm() {
 
   return (
     <div>
-      <div className="flex place-content-center items-center h-[100vh] w-[100vw]">
+      <div className="flex h-[100vh] w-[100vw] place-content-center items-center">
         <LeafyBackground />
-        <div className="z-40 border-2 border-dgrey m-16 flex flex-col place-content-center w-[500px] h-[375px] big-box justify-self-center">
-          <p className="text-3xl m-3 w-100 text-center mb-8">
+        <div className="big-box z-40 m-16 flex h-[375px] w-[500px] flex-col place-content-center justify-self-center border-2 border-dgrey">
+          <p className="w-100 m-3 mb-8 text-center text-3xl">
             Add a Storage Location
           </p>
           <div className="flex place-content-center items-center">
@@ -64,7 +64,7 @@ export default function LocationForm() {
               name="name"
               onChange={handleNameChange}
               value={name}
-              className="m-4 box px-2"
+              className="box m-4 px-2"
             />
             <p>Color: </p>
             <input
@@ -72,7 +72,7 @@ export default function LocationForm() {
               name="name"
               onChange={handleColorChange}
               value={color}
-              className="m-4 box px-2"
+              className="box m-4 px-2"
             />
           </div>
           <div className="flex place-content-center items-center">
@@ -82,10 +82,10 @@ export default function LocationForm() {
               name="name"
               onChange={handleNotesChange}
               value={notes}
-              className="m-4 box px-2"
+              className="box m-4 px-2"
             />
           </div>
-          <div className="flex flex-col place-content-center mt-4">
+          <div className="mt-4 flex flex-col place-content-center">
             <div className="flex place-content-center">
               <button
                 className="button w-[20%] text-center hover:scale-[102%]"
@@ -95,7 +95,7 @@ export default function LocationForm() {
               </button>
             </div>
           </div>
-          <div className="flex place-content-center mt-6">
+          <div className="mt-6 flex place-content-center">
             <button
               className="hover:text-dgreen"
               onClick={() => navigate("/seeds")}

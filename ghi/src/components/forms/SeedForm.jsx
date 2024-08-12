@@ -174,12 +174,12 @@ export default function SeedForm() {
 
   return (
     <div>
-      <div className="flex place-content-center items-center h-[100vh] w-[100vw]">
+      <div className="flex h-[100vh] w-[100vw] place-content-center items-center">
         <LeafyBackground />
-        <div className="z-40 border-2 border-dgrey m-16 flex flex-col place-content-center w-[855px] h-[700px] big-box justify-self-center">
-          <p className="text-3xl m-3 w-100 text-center mb-8">Add a New Seed!</p>
+        <div className="big-box z-40 m-16 flex h-[700px] w-[855px] flex-col place-content-center justify-self-center border-2 border-dgrey">
+          <p className="w-100 m-3 mb-8 text-center text-3xl">Add a New Seed!</p>
           <div className="flex">
-            <div className="flex items-end flex-col ml-8">
+            <div className="ml-8 flex flex-col items-end">
               <div className="flex place-content-center items-center">
                 <p>Name: </p>
                 <input
@@ -187,7 +187,7 @@ export default function SeedForm() {
                   name="name"
                   onChange={handleNameChange}
                   value={name}
-                  className="m-4 box px-2"
+                  className="box m-4 px-2"
                 />
               </div>
               <div className="flex place-content-center items-center">
@@ -197,7 +197,7 @@ export default function SeedForm() {
                   name="name"
                   onChange={handleNicknameChange}
                   value={nickname}
-                  className="m-4 box px-2"
+                  className="box m-4 px-2"
                 />
               </div>
               <div className="flex place-content-center items-center">
@@ -207,7 +207,7 @@ export default function SeedForm() {
                   name="quantity"
                   onChange={handleQuantityChange}
                   value={quantity}
-                  className="m-4 box px-2"
+                  className="box m-4 px-2"
                 />
               </div>
               <div className="flex place-content-center items-center">
@@ -217,7 +217,7 @@ export default function SeedForm() {
                   name="days"
                   onChange={handleDaysChange}
                   value={days}
-                  className="m-4 box px-2"
+                  className="box m-4 px-2"
                 />
               </div>
               <div className="flex place-content-center items-center">
@@ -227,14 +227,14 @@ export default function SeedForm() {
                   name="frostHardy"
                   onChange={handleFrostHardyChange}
                   value={frostHardy}
-                  className="m-4 box px-2"
+                  className="box m-4 px-2"
                 />
               </div>
-              <div className="flex place-content-center items-center my-2">
+              <div className="my-2 flex place-content-center items-center">
                 <p>Season: </p>
                 <button onClick={() => setSeasonDropdown(!seasonDropdown)}>
-                  <div className="flex flex-col divide-y-2 px-2 ml-2 box w-[250px] max-h-[190px] overflow-scroll scrollbar-thin scrollbar-thumb-orange scrollbar-thumb-rounded-lg">
-                    <div className="flex justify-between px-2 items-start h-5 mt-1">
+                  <div className="box scrollbar-thumb-orange ml-2 flex max-h-[190px] w-[250px] flex-col divide-y-2 overflow-scroll px-2 scrollbar-thin scrollbar-thumb-rounded-lg">
+                    <div className="mt-1 flex h-5 items-start justify-between px-2">
                       <p className="text-m">{season}</p>
                       <img
                         src="https://img.icons8.com/sf-ultralight/25/4B5858/down-squared.png"
@@ -245,8 +245,8 @@ export default function SeedForm() {
                       ? seasonArray.map((s) => {
                           return (
                             <button key={s} onClick={() => setSeason(s)}>
-                              <div className="flex p-2 w-100">
-                                <p className="hover:text-lgreen mt-1 pr-3">
+                              <div className="w-100 flex p-2">
+                                <p className="mt-1 pr-3 hover:text-lgreen">
                                   {s}
                                 </p>
                               </div>
@@ -257,11 +257,11 @@ export default function SeedForm() {
                   </div>
                 </button>
               </div>
-              <div className="flex place-content-center items-center my-2">
+              <div className="my-2 flex place-content-center items-center">
                 <p>Category: </p>
                 <button onClick={() => setCategoryDropdown(!categoryDropdown)}>
-                  <div className="flex flex-col divide-y-2 px-2 ml-2 box w-[250px] max-h-[190px] overflow-scroll scrollbar-thin scrollbar-thumb-orange scrollbar-thumb-rounded-lg">
-                    <div className="flex justify-between px-2 items-start h-5 mt-1">
+                  <div className="box scrollbar-thumb-orange ml-2 flex max-h-[190px] w-[250px] flex-col divide-y-2 overflow-scroll px-2 scrollbar-thin scrollbar-thumb-rounded-lg">
+                    <div className="mt-1 flex h-5 items-start justify-between px-2">
                       <p className="text-m">{category}</p>
                       <img
                         src="https://img.icons8.com/sf-ultralight/25/4B5858/down-squared.png"
@@ -272,8 +272,8 @@ export default function SeedForm() {
                       ? categoryArray.map((c) => {
                           return (
                             <button key={c} onClick={() => setCategory(c)}>
-                              <div className="flex p-2 w-100">
-                                <p className="hover:text-lgreen mt-1 pr-3">
+                              <div className="w-100 flex p-2">
+                                <p className="mt-1 pr-3 hover:text-lgreen">
                                   {c}
                                 </p>
                               </div>
@@ -285,14 +285,14 @@ export default function SeedForm() {
                 </button>
               </div>
             </div>
-            <div className="flex items-start flex-col ml-8">
-              <div className="flex place-content-center items-center my-2">
+            <div className="ml-8 flex flex-col items-start">
+              <div className="my-2 flex place-content-center items-center">
                 <p>Plant Type: </p>
                 <button
                   onClick={() => setPlantTypeDropdown(!plantTypeDropdown)}
                 >
-                  <div className="flex flex-col divide-y-2 px-2 ml-2 box w-[250px] max-h-[190px] overflow-scroll scrollbar-thin scrollbar-thumb-orange scrollbar-thumb-rounded-lg">
-                    <div className="flex justify-between px-2 items-start h-5 mt-1">
+                  <div className="box scrollbar-thumb-orange ml-2 flex max-h-[190px] w-[250px] flex-col divide-y-2 overflow-scroll px-2 scrollbar-thin scrollbar-thumb-rounded-lg">
+                    <div className="mt-1 flex h-5 items-start justify-between px-2">
                       <p className="text-m">
                         {plantTypeName != ""
                           ? plantTypeName
@@ -311,8 +311,8 @@ export default function SeedForm() {
                               key={c.id}
                               onClick={() => handlePlantTypeChange(c)}
                             >
-                              <div className="flex p-2 w-100">
-                                <p className="hover:text-lgreen mt-1 pr-3">
+                              <div className="w-100 flex p-2">
+                                <p className="mt-1 pr-3 hover:text-lgreen">
                                   {c.name}
                                 </p>
                               </div>
@@ -324,13 +324,13 @@ export default function SeedForm() {
                 </button>
               </div>
 
-              <div className="flex place-content-center items-center my-2">
+              <div className="my-2 flex place-content-center items-center">
                 <p>Seed Storage: </p>
                 <button
                   onClick={() => setSeedStorageDropdown(!seedStorageDropdown)}
                 >
-                  <div className="flex flex-col divide-y-2 px-2 ml-2 box w-[250px] max-h-[190px] overflow-scroll scrollbar-thin scrollbar-thumb-orange scrollbar-thumb-rounded-lg">
-                    <div className="flex justify-between px-2 items-start h-5 mt-1">
+                  <div className="box scrollbar-thumb-orange ml-2 flex max-h-[190px] w-[250px] flex-col divide-y-2 overflow-scroll px-2 scrollbar-thin scrollbar-thumb-rounded-lg">
+                    <div className="mt-1 flex h-5 items-start justify-between px-2">
                       <p className="text-m">{storage}</p>
                       <img
                         src="https://img.icons8.com/sf-ultralight/25/4B5858/down-squared.png"
@@ -342,8 +342,8 @@ export default function SeedForm() {
                         seedStorages.map((s) => {
                           return (
                             <button key={s.id} onClick={() => setStorage(s.id)}>
-                              <div className="flex p-2 w-100">
-                                <p className="hover:text-lgreen mt-1 pr-3">
+                              <div className="w-100 flex p-2">
+                                <p className="mt-1 pr-3 hover:text-lgreen">
                                   {s.name}
                                 </p>
                               </div>
@@ -361,12 +361,12 @@ export default function SeedForm() {
                   name="name"
                   onChange={handleNotesChange}
                   value={notes}
-                  className="m-4 box px-2"
+                  className="box m-4 px-2"
                 />
               </div>
 
               <div>
-                <div className="relative flex place-content-start items-center ml-4">
+                <div className="relative ml-4 flex place-content-start items-center">
                   <p className="pl-3">Water Needs:</p>
                   <input
                     type="number"
@@ -375,12 +375,12 @@ export default function SeedForm() {
                     value={waterNeeds}
                     min="1"
                     max="5"
-                    className="m-4 box px-2"
+                    className="box m-4 px-2"
                   />
                 </div>
               </div>
               <div>
-                <div className="relative flex place-content-start items-center ml-4">
+                <div className="relative ml-4 flex place-content-start items-center">
                   <p className="pl-3">Rating:</p>
                   <input
                     type="number"
@@ -389,37 +389,37 @@ export default function SeedForm() {
                     value={rating}
                     min="1"
                     max="5"
-                    className="m-4 box px-2"
+                    className="box m-4 px-2"
                   />
                 </div>
               </div>
               <div>
-                <div className="relative flex place-content-start items-center ml-4">
+                <div className="relative ml-4 flex place-content-start items-center">
                   <p className="pl-3">Brand:</p>
                   <input
                     type="text"
                     name="brand"
                     onChange={handleBrandChange}
                     value={brand}
-                    className="m-4 box px-2"
+                    className="box m-4 px-2"
                   />
                 </div>
               </div>
               <div>
-                <div className="relative flex place-content-start items-center ml-4">
+                <div className="relative ml-4 flex place-content-start items-center">
                   <p className="pl-3">Purchase URL:</p>
                   <input
                     type="url"
                     name="url"
                     onChange={handleUrlChange}
                     value={url}
-                    className="m-4 box px-2"
+                    className="box m-4 px-2"
                   />
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex flex-col place-content-center mt-8">
+          <div className="mt-8 flex flex-col place-content-center">
             <div className="flex place-content-center">
               <button
                 className="button w-[15vw] text-center hover:scale-[102%]"
@@ -428,7 +428,7 @@ export default function SeedForm() {
                 Add Seed to Collection
               </button>
             </div>
-            <div className="flex place-content-center mt-3">
+            <div className="mt-3 flex place-content-center">
               <button
                 className="hover:text-dgreen"
                 onClick={() => navigate("/seeds")}

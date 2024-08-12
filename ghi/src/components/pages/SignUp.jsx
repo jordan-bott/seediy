@@ -97,14 +97,14 @@ export default function Signup() {
 
   return (
     <div>
-      <div className="flex place-content-center items-center h-[100vh] w-[100vw]">
+      <div className="flex h-[100vh] w-[100vw] place-content-center items-center">
         <LeafyBackground />
-        <div className="z-40 border-2 border-dgrey m-16 flex flex-col place-content-center w-[755px] h-[500px] big-box justify-self-center">
-          <p className="text-3xl m-3 w-100 text-center mb-8">
+        <div className="big-box z-40 m-16 flex h-[500px] w-[755px] flex-col place-content-center justify-self-center border-2 border-dgrey">
+          <p className="w-100 m-3 mb-8 text-center text-3xl">
             Welcome to Seediy!
           </p>
           <div className="flex">
-            <div className="flex items-end flex-col ml-8">
+            <div className="ml-8 flex flex-col items-end">
               <div className="flex place-content-center items-center">
                 <p>Username: </p>
                 <input
@@ -112,7 +112,7 @@ export default function Signup() {
                   name="username"
                   onChange={handleUsernameChange}
                   value={username}
-                  className="m-4 box px-2"
+                  className="box m-4 px-2"
                 />
               </div>
               <div className="flex place-content-center items-center">
@@ -122,7 +122,7 @@ export default function Signup() {
                   name="email"
                   onChange={handleEmailChange}
                   value={email}
-                  className="m-4 box px-2"
+                  className="box m-4 px-2"
                 />
               </div>
               <div className="relative flex place-content-center items-center">
@@ -132,11 +132,11 @@ export default function Signup() {
                   name="password"
                   onChange={handlePasswordChange}
                   value={password}
-                  className="m-4 box px-2"
+                  className="box m-4 px-2"
                 />
                 <button
                   onClick={() => setShowPass(!showPass)}
-                  className="h-[25px] w-[25px] absolute right-[6%]"
+                  className="absolute right-[6%] h-[25px] w-[25px]"
                 >
                   <img
                     src={
@@ -149,7 +149,7 @@ export default function Signup() {
                 </button>
               </div>
             </div>
-            <div className="flex items-start flex-col ml-8">
+            <div className="ml-8 flex flex-col items-start">
               <div className="flex place-content-center items-center">
                 <p>Zipcode: </p>
                 <input
@@ -157,7 +157,7 @@ export default function Signup() {
                   name="zipcode"
                   onChange={handleZipcodeChange}
                   value={zipcode}
-                  className="m-4 box px-2"
+                  className="box m-4 px-2"
                 />
               </div>
               <div className="flex place-content-center items-center">
@@ -167,7 +167,7 @@ export default function Signup() {
                   name="firstFrost"
                   onChange={handleFirstFrostChange}
                   value={firstFrost}
-                  className="m-4 box px-2"
+                  className="box m-4 px-2"
                 />
               </div>
               <div className="flex place-content-center items-center">
@@ -177,24 +177,24 @@ export default function Signup() {
                   name="lastFrost"
                   onChange={handleLastFrostChange}
                   value={lastFrost}
-                  className="m-4 box px-2"
+                  className="box m-4 px-2"
                 />
               </div>
             </div>
           </div>
           <div>
-            <div className="relative flex place-content-start items-center ml-4">
+            <div className="relative ml-4 flex place-content-start items-center">
               <p className="pl-3">Retype your password:</p>
               <input
                 type={showPass ? "text" : "password"}
                 name="passwordConf"
                 onChange={handlePasswordConfChange}
                 value={passwordConf}
-                className="m-4 box px-2"
+                className="box m-4 px-2"
               />
               <button
                 onClick={() => setShowPass(!showPass)}
-                className="h-[25px] w-[25px] absolute right-[45%]"
+                className="absolute right-[45%] h-[25px] w-[25px]"
               >
                 <img
                   src={
@@ -207,7 +207,7 @@ export default function Signup() {
               </button>
             </div>
           </div>
-          <div className="flex flex-col place-content-center mt-8">
+          <div className="mt-8 flex flex-col place-content-center">
             <div className="flex place-content-center">
               <button
                 className="button w-[10vw] text-center hover:scale-[102%]"
@@ -216,7 +216,7 @@ export default function Signup() {
                 Sign Up
               </button>
             </div>
-            <div className="flex place-content-center mt-3">
+            <div className="mt-3 flex place-content-center">
               <p>
                 Already growing here?{" "}
                 <button

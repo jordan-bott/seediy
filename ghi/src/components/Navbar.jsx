@@ -23,7 +23,7 @@ export default function NavBar() {
 
   return (
     <>
-      <div className="absolute right-[1%] -top-[2%] flex items-end">
+      <div className="absolute -top-[2%] right-[1%] flex items-end">
         <button onClick={() => navigate("/dashboard")}>
           <img src={seediyLogo} alt="logo" className="w-[10vw]" />
         </button>
@@ -45,7 +45,7 @@ export default function NavBar() {
         ) : null}
       </div>
       {token ? (
-        <div className="absolute left-[.5%] top-[-1%] overflow-y-hidden h-[100vh] z-50">
+        <div className="absolute left-[.5%] top-[-1%] z-50 h-[100vh] overflow-y-hidden">
           <NavImage className="" props={pathname} />
           <button
             onClick={() => navigate("/dashboard")}

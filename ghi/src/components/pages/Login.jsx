@@ -44,10 +44,10 @@ export default function Login() {
 
   return (
     <div>
-      <div className="flex place-content-center items-center h-[100vh] w-[100vw]">
+      <div className="flex h-[100vh] w-[100vw] place-content-center items-center">
         <LeafyBackground />
-        <div className="z-40 border-2 border-dgrey m-16 flex flex-col place-content-center w-[500px] h-[375px] big-box justify-self-center">
-          <p className="text-3xl m-3 w-100 text-center mb-8">
+        <div className="big-box z-40 m-16 flex h-[375px] w-[500px] flex-col place-content-center justify-self-center border-2 border-dgrey">
+          <p className="w-100 m-3 mb-8 text-center text-3xl">
             Welcome Back to Seediy!
           </p>
           <div className="flex place-content-center items-center">
@@ -57,7 +57,7 @@ export default function Login() {
               name="username"
               onChange={handleUsernameChange}
               value={username}
-              className="m-4 box px-2"
+              className="box m-4 px-2"
             />
           </div>
           <div className="relative flex place-content-center items-center">
@@ -67,11 +67,11 @@ export default function Login() {
               name="password"
               onChange={handlePasswordChange}
               value={password}
-              className="m-4 box px-2"
+              className="box m-4 px-2"
             />
             <button
               onClick={() => setShowPass(!showPass)}
-              className="h-[25px] w-[25px] absolute right-[22.5%]"
+              className="absolute right-[22.5%] h-[25px] w-[25px]"
             >
               <img
                 src={
@@ -83,7 +83,7 @@ export default function Login() {
               />
             </button>
           </div>
-          <div className="flex flex-col place-content-center mt-8">
+          <div className="mt-8 flex flex-col place-content-center">
             <div className="flex place-content-center">
               <button
                 className="button w-[10vw] text-center hover:scale-[102%]"
@@ -92,7 +92,7 @@ export default function Login() {
                 Login
               </button>
             </div>
-            <div className="flex place-content-center mt-3">
+            <div className="mt-3 flex place-content-center">
               <p>
                 Not growing with us yet?{" "}
                 <button

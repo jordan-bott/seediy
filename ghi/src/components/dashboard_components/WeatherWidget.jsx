@@ -14,14 +14,14 @@ export default function WeatherWidget(info) {
     now.getFullYear(),
     now.getMonth(),
     now.getDate(),
-    8
+    8,
   );
   const eightUnix = Date.parse(eightDate) / 1000;
   const noonDate = new Date(
     now.getFullYear(),
     now.getMonth(),
     now.getDate(),
-    12
+    12,
   );
   const noonUnix = Date.parse(noonDate) / 1000;
 
@@ -29,7 +29,7 @@ export default function WeatherWidget(info) {
     now.getFullYear(),
     now.getMonth(),
     now.getDate(),
-    17
+    17,
   );
   const fiveUnix = Date.parse(fiveDate) / 1000;
 
@@ -207,11 +207,11 @@ export default function WeatherWidget(info) {
 
   return (
     <>
-      <div className="flex mt-8 mb-4 mx-6 items-center place-content-around w-[80%]">
+      <div className="mx-6 mb-4 mt-8 flex w-[80%] place-content-around items-center">
         <div className="text-6xl">
           {currentTemp}°{user.units === "imperial" ? "F" : "C"}
         </div>
-        <div className="flex flex-col mx-4 text-2xl">
+        <div className="mx-4 flex flex-col text-2xl">
           <div>
             High: {highTemp}°{user.units === "imperial" ? "F" : "C"}
           </div>
@@ -223,109 +223,109 @@ export default function WeatherWidget(info) {
           <img src={weatherIcon} alt="weather icon" />
         </div>
       </div>
-      <div className="w-[80%] h-[70%] mt-4">
-        <div className="flex items-end border-2 rounded-lg border-dgrey relative h-[16%]">
+      <div className="mt-4 h-[70%] w-[80%]">
+        <div className="relative flex h-[16%] items-end rounded-lg border-2 border-dgrey">
           <div>
             <img
               src="https://img.icons8.com/sf-ultralight/50/4b5858/sunrise.png"
               alt="sunrise"
-              className="absolute left-[2%] bottom-[5%]"
+              className="absolute bottom-[5%] left-[2%]"
             />
           </div>
-          <div className="absolute left-[15%] bottom-[25%] text-lg">
+          <div className="absolute bottom-[25%] left-[15%] text-lg">
             {new Date(sunriseUnix * 1000).toLocaleTimeString([], {
               timeStyle: "short",
             })}
           </div>
-          <div className="absolute left-[40%] bottom-[25%] text-lg">
+          <div className="absolute bottom-[25%] left-[40%] text-lg">
             {Math.round(sunriseWeather.data[0].temp)}°
             {user.units === "imperial" ? "F" : "C"}
           </div>
-          <div className="absolute left-[60%] bottom-[25%] text-lg">
+          <div className="absolute bottom-[25%] left-[60%] text-lg">
             {sunriseWeather.data[0].weather[0].description}
           </div>
         </div>
-        <div className="flex items-end border-2 rounded-lg border-dgrey relative h-[16%] mt-3">
+        <div className="relative mt-3 flex h-[16%] items-end rounded-lg border-2 border-dgrey">
           <div>
             <img
               src={eightIcon}
               alt="8am weather icon"
-              className="absolute left-[2%] bottom-[5%] w-[50px]"
+              className="absolute bottom-[5%] left-[2%] w-[50px]"
             />
           </div>
-          <div className="absolute left-[15%] bottom-[25%] text-lg">
+          <div className="absolute bottom-[25%] left-[15%] text-lg">
             {eightDate.toLocaleTimeString([], {
               timeStyle: "short",
             })}
           </div>
-          <div className="absolute left-[40%] bottom-[25%] text-lg">
+          <div className="absolute bottom-[25%] left-[40%] text-lg">
             {Math.round(eightWeather.data[0].temp)}°
             {user.units === "imperial" ? "F" : "C"}
           </div>
-          <div className="absolute left-[60%] bottom-[25%] text-lg">
+          <div className="absolute bottom-[25%] left-[60%] text-lg">
             {eightWeather.data[0].weather[0].description}
           </div>
         </div>
-        <div className="flex items-end border-2 rounded-lg border-dgrey relative h-[16%] mt-3">
+        <div className="relative mt-3 flex h-[16%] items-end rounded-lg border-2 border-dgrey">
           <div>
             <img
               src={noonIcon}
               alt="8am weather icon"
-              className="absolute left-[2%] bottom-[5%] w-[50px]"
+              className="absolute bottom-[5%] left-[2%] w-[50px]"
             />
           </div>
-          <div className="absolute left-[15%] bottom-[25%] text-lg">
+          <div className="absolute bottom-[25%] left-[15%] text-lg">
             {noonDate.toLocaleTimeString([], {
               timeStyle: "short",
             })}
           </div>
-          <div className="absolute left-[40%] bottom-[25%] text-lg">
+          <div className="absolute bottom-[25%] left-[40%] text-lg">
             {Math.round(noonWeather.data[0].temp)}°
             {user.units === "imperial" ? "F" : "C"}
           </div>
-          <div className="absolute left-[60%] bottom-[25%] text-lg">
+          <div className="absolute bottom-[25%] left-[60%] text-lg">
             {noonWeather.data[0].weather[0].description}
           </div>
         </div>
-        <div className="flex items-end border-2 rounded-lg border-dgrey relative h-[16%] mt-3">
+        <div className="relative mt-3 flex h-[16%] items-end rounded-lg border-2 border-dgrey">
           <div>
             <img
               src={fiveIcon}
               alt="8am weather icon"
-              className="absolute left-[2%] bottom-[5%] w-[50px]"
+              className="absolute bottom-[5%] left-[2%] w-[50px]"
             />
           </div>
-          <div className="absolute left-[15%] bottom-[25%] text-lg">
+          <div className="absolute bottom-[25%] left-[15%] text-lg">
             {fiveDate.toLocaleTimeString([], {
               timeStyle: "short",
             })}
           </div>
-          <div className="absolute left-[40%] bottom-[25%] text-lg">
+          <div className="absolute bottom-[25%] left-[40%] text-lg">
             {Math.round(fiveWeather.data[0].temp)}°
             {user.units === "imperial" ? "F" : "C"}
           </div>
-          <div className="absolute left-[60%] bottom-[25%] text-lg">
+          <div className="absolute bottom-[25%] left-[60%] text-lg">
             {fiveWeather.data[0].weather[0].description}
           </div>
         </div>
-        <div className="flex items-end border-2 rounded-lg border-dgrey relative h-[16%] mt-3">
+        <div className="relative mt-3 flex h-[16%] items-end rounded-lg border-2 border-dgrey">
           <div>
             <img
               src="https://img.icons8.com/sf-ultralight/50/4b5858/sunset.png"
               alt="sunrise"
-              className="absolute left-[2%] bottom-[5%]"
+              className="absolute bottom-[5%] left-[2%]"
             />
           </div>
-          <div className="absolute left-[15%] bottom-[25%] text-lg">
+          <div className="absolute bottom-[25%] left-[15%] text-lg">
             {new Date(sunsetUnix * 1000).toLocaleTimeString([], {
               timeStyle: "short",
             })}
           </div>
-          <div className="absolute left-[40%] bottom-[25%] text-lg">
+          <div className="absolute bottom-[25%] left-[40%] text-lg">
             {Math.round(sunsetWeather.data[0].temp)}°
             {user.units === "imperial" ? "F" : "C"}
           </div>
-          <div className="absolute left-[60%] bottom-[25%] text-lg">
+          <div className="absolute bottom-[25%] left-[60%] text-lg">
             {sunsetWeather.data[0].weather[0].description}
           </div>
         </div>

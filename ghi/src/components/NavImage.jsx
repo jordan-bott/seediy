@@ -10,7 +10,7 @@ export default function NavImage(pathname) {
   const path = pathname.props;
   if (path === "/dashboard") {
     return (
-      <div className="h-[100vh] overflow-y-hidden flex align-center">
+      <div className="align-center flex h-[100vh] overflow-y-hidden">
         <img
           className="h-[110vh] overflow-hidden"
           src={homeNav}
@@ -21,7 +21,7 @@ export default function NavImage(pathname) {
   }
   if (path === "/seeds") {
     return (
-      <div className="h-[100vh] overflow-y-hidden flex align-center">
+      <div className="align-center flex h-[100vh] overflow-y-hidden">
         <img
           className="h-[110vh] overflow-hidden"
           src={seedNav}
@@ -32,7 +32,7 @@ export default function NavImage(pathname) {
   }
   if (path === "/instaseed") {
     return (
-      <div className="h-[100vh] overflow-y-hidden flex align-center">
+      <div className="align-center flex h-[100vh] overflow-y-hidden">
         <img
           className="h-[110vh] overflow-hidden"
           src={instaseedNav}
@@ -43,7 +43,7 @@ export default function NavImage(pathname) {
   }
   if (path === "/blogs") {
     return (
-      <div className="h-[100vh] overflow-y-hidden flex align-center">
+      <div className="align-center flex h-[100vh] overflow-y-hidden">
         <img
           className="h-[110vh] overflow-hidden"
           src={blogNav}
@@ -54,7 +54,7 @@ export default function NavImage(pathname) {
   }
   if (path === "/garden") {
     return (
-      <div className="h-[100vh] overflow-y-hidden flex align-center">
+      <div className="align-center flex h-[100vh] overflow-y-hidden">
         <img
           className="h-[110vh] overflow-hidden"
           src={gardenNav}
@@ -65,7 +65,7 @@ export default function NavImage(pathname) {
   }
   if (path === "/harvest") {
     return (
-      <div className="h-[100vh] overflow-y-hidden flex align-center">
+      <div className="align-center flex h-[100vh] overflow-y-hidden">
         <img
           className="h-[110vh] overflow-hidden"
           src={harvestNav}
@@ -76,7 +76,7 @@ export default function NavImage(pathname) {
   }
   if (path === "/weather") {
     return (
-      <div className="h-[100vh] overflow-y-hidden flex align-center">
+      <div className="align-center flex h-[100vh] overflow-y-hidden">
         <img
           className="h-[110vh] overflow-hidden"
           src={weatherNav}

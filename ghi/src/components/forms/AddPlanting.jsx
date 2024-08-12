@@ -73,15 +73,15 @@ export default function AddPlanting() {
 
   return (
     <div>
-      <div className="flex place-content-center items-center h-[100vh] w-[100vw]">
+      <div className="flex h-[100vh] w-[100vw] place-content-center items-center">
         <LeafyBackground />
-        <div className="z-40 border-2 border-dgrey m-16 flex flex-col place-content-center w-[500px] h-[450px] big-box justify-self-center">
-          <p className="text-3xl m-3 w-100 text-center mb-8">Add a Planting</p>
-          <div className="flex place-content-center items-center my-2">
+        <div className="big-box z-40 m-16 flex h-[450px] w-[500px] flex-col place-content-center justify-self-center border-2 border-dgrey">
+          <p className="w-100 m-3 mb-8 text-center text-3xl">Add a Planting</p>
+          <div className="my-2 flex place-content-center items-center">
             <p>Seed: </p>
             <button onClick={() => setSeedDropdown(!seedDropdown)}>
-              <div className="flex flex-col divide-y-2 px-2 ml-2 box w-[250px] max-h-[190px] overflow-scroll scrollbar-thin scrollbar-thumb-orange scrollbar-thumb-rounded-lg">
-                <div className="flex justify-between px-2 items-start h-5 mt-1">
+              <div className="box scrollbar-thumb-orange ml-2 flex max-h-[190px] w-[250px] flex-col divide-y-2 overflow-scroll px-2 scrollbar-thin scrollbar-thumb-rounded-lg">
+                <div className="mt-1 flex h-5 items-start justify-between px-2">
                   <p className="text-m">{seed}</p>
                   <img
                     src="https://img.icons8.com/sf-ultralight/25/4B5858/down-squared.png"
@@ -92,8 +92,8 @@ export default function AddPlanting() {
                   ? seeds.map((s) => {
                       return (
                         <button key={s.id} onClick={() => setSeed(s.id)}>
-                          <div className="flex p-2 w-100">
-                            <p className="hover:text-lgreen mt-1 pr-3">
+                          <div className="w-100 flex p-2">
+                            <p className="mt-1 pr-3 hover:text-lgreen">
                               {s.nickname}
                             </p>
                           </div>
@@ -111,7 +111,7 @@ export default function AddPlanting() {
               name="date"
               onChange={handleDateChange}
               value={date}
-              className="m-4 box px-2"
+              className="box m-4 px-2"
             />
           </div>
           <div className="flex place-content-center items-center">
@@ -121,7 +121,7 @@ export default function AddPlanting() {
               name="location"
               onChange={handleLocationChange}
               value={location}
-              className="m-4 box px-2"
+              className="box m-4 px-2"
             />
           </div>
 
@@ -132,10 +132,10 @@ export default function AddPlanting() {
               name="name"
               onChange={handleNotesChange}
               value={notes}
-              className="m-4 box px-2"
+              className="box m-4 px-2"
             />
           </div>
-          <div className="flex flex-col place-content-center mt-4">
+          <div className="mt-4 flex flex-col place-content-center">
             <div className="flex place-content-center">
               <button
                 className="button w-[20%] text-center hover:scale-[102%]"
@@ -145,7 +145,7 @@ export default function AddPlanting() {
               </button>
             </div>
           </div>
-          <div className="flex place-content-center mt-6">
+          <div className="mt-6 flex place-content-center">
             <button
               className="hover:text-dgreen"
               onClick={() => navigate("/dashboard")}

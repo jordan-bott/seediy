@@ -6,10 +6,10 @@ export default function LostError() {
   const navigate = useNavigate();
   return (
     <>
-      <div className="flex flex-col place-content-center items-center h-[100vh] w-[100vw]">
+      <div className="flex h-[100vh] w-[100vw] flex-col place-content-center items-center">
         <LeafyBackground />
-        <p className="text-5xl z-40 pb-8">Whoops! You look a bit lost.</p>
-        <div className="flex place-content-around w-[40%]">
+        <p className="z-40 pb-8 text-5xl">Whoops! You look a bit lost.</p>
+        <div className="flex w-[40%] place-content-around">
           <div>
             <img
               src={Leaf}
@@ -17,7 +17,7 @@ export default function LostError() {
               className="relative h-40 rotate-[45deg]"
             />
             <button
-              className="inline absolute text-3xl left-[48%] top-[52%] z-10"
+              className="absolute left-[48%] top-[52%] z-10 inline text-3xl"
               onClick={() => navigate("/dashboard")}
             >
               Home
